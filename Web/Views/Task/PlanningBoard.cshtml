@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Core.Dto.PMDb.TaskModels>
+@{
+    ViewBag.Title = "PlanningBoard";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Planning Board</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              
+             
+                <div class="col-md-4 profile_details">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Outstanding</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                               
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:600px">
+                            <br>
+
+                            <input type="text" id="filteroutstanding" placeholder="Search Task .." class="form-control">
+                            <br />
+                            <div style="overflow: scroll; overflow-x: hidden; height:500px">
+                                <ul class="list-group" id="OutstandingList">
+                                    @{
+                                        foreach (var item in Model)
+                                        {
+                                            <li>
+                                                <div class="x_panel">
+                                                    @Html.DisplayFor(modelitem => item.TaskName, new { Class = "form-control" })
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 profile_details">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>In Progress</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="height:600px">
+                            <br>
+
+                            <input type="text" id="filterInProgress" placeholder="Search Task .." class="form-control">
+                            <br />
+                            <div style="overflow: scroll; overflow-x: hidden; height:500px">
+                                <ul class="list-group" id="InProgressList">
+                                    @{
+                                        foreach (var item in Model)
+                                        {
+                                            <li>
+                                                <div class="x_panel">
+                                                    @Html.DisplayFor(modelitem => item.TaskName, new { Class = "form-control" })
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script type="text/javascript">
+     
+            $(document).ready(function () {
+                function FilterList(txtName,ulName) {
+                    // Declare variables
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById(txtName);
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById(ulName);
+                    li = ul.getElementsByTagName('li');
+
+                    // Loop through all list items, and hide those who don't match the search query
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+
+                $("#filteroutstanding").keyup(function () {
+                    FilterList("filteroutstanding", "OutstandingList");
+                });
+
+                $("#filterInProgress").keyup(function () {
+                    FilterList("filterInProgress", "InProgressList");
+                });
+            });
+    </script>
+    }

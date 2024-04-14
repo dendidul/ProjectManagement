@@ -1,0 +1,91 @@
+﻿@model  Core.Dto.PMDb.FormTaskModel
+
+
+
+@{
+    int j = 0;
+}
+@using (Html.BeginForm("SubmitActivityLog", "Global", FormMethod.Post, new { Class = "formAddRoles", Id = "formSub", Role = "form", enctype = "multipart/form-data" }))
+{
+    <div id="TblInputData">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel2">Activity Log</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="testmodal2" style="padding: 5px 0px;">
+                       
+                        @Html.HiddenFor(model => model.TaskData.Id)
+
+                        @if (Model.TaskDayActivity.Count == 0)
+                        {
+                            <table class="table" id="dataTable">
+                                <tr>
+                                    <td>Date</td>
+                                    <td>Estimates Time</td>
+                                    <td>Description</td>
+                                    <td>Action</td>
+                                </tr>
+                                <tr>
+                                    <td>@Html.TextBoxFor(model => model.TaskDayActivity[j].Startdate, "{0:dd-MMM-yyyy}", new { Class = "form-control", Style = "width:110px" })</td>
+                                    <td>@Html.TextBoxFor(model => model.TaskDayActivity[j].Estimate, new { Class = "form-control", Style = "width:50px" })</td>
+                                    <td>@Html.TextAreaFor(model => model.TaskDayActivity[j].Description, new { Class = "form-control", rows = 3, Style = "width:300px" })</td>
+
+                                    <td>
+                                        @if (j > 0)
+                                        {
+                                            <a href="#" class="remove" title="Delete Row"><i class="glyphicon glyphicon-trash"></i></a>
+                                        }
+                                    </td>
+                                </tr>
+
+                            </table>
+                        }
+                        else
+                        {
+                            <table class="table" id="dataTable">
+                                <tr>
+                                    <td>Date</td>
+                                    <td>Estimates Time</td>
+                                    <td>Description</td>
+                                    <td>Action</td>
+                                </tr>
+                                @{
+                            foreach (var data in Model.TaskDayActivity)
+                            {
+                                <tr>
+
+
+                                    <td>@Html.TextBoxFor(model => model.TaskDayActivity[j].Startdate, "{0:dd-MMM-yyyy}", new { Class = "form-control", Style = "width:110px",disabled ="true" })</td>
+                                    <td>@Html.TextBoxFor(model => model.TaskDayActivity[j].Estimate, new { Class = "form-control", Style = "width:50px", disabled = "true" })</td>
+                                    <td>@Html.TextAreaFor(model => model.TaskDayActivity[j].Description, new { Class = "form-control", rows = 3, Style = "width:300px", disabled = "true" })</td>
+
+                                    <td>
+                                        @if (j > 0)
+                                        {
+                                            <a href="#" class="remove" title="Delete Row"><i class="glyphicon glyphicon-trash"></i></a>
+                                        }
+                                    </td>
+
+
+                                </tr>
+                                        j++;
+                            }
+                                }
+                            </table>
+
+                        }
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @*<button type="button" id="BtnSubmitActivity" class="btn btn-success">Submit</button>*@
+                    <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,737 @@
+﻿@model Core.Dto.PMDb.FormTaskModel
+
+@{
+    ViewBag.Title = "Create Projects";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+@*<h2>Create</h2>*@
+
+@using (Html.BeginForm("Edit", "Bugs", FormMethod.Post, new { Class = "", Id = "formAddRoles" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Edit Bugs</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+
+                    </ul>
+
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="form-horizontal form-label-left input_mask">
+                    @if (Model.TaskData.Statusid == 4 || Model.TaskData.Statusid == 9 || Model.TaskData.Statusid == 2)
+                    {
+                        <button id="BtnActivity" type="button" class="btn btn-info">Input Activity Log</button>
+                    }
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Task Group <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Taskgroupid, ViewBag.ActiveTaskGroup as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", required = "true" })
+                            @Html.HiddenFor(model => model.TaskData.Id)
+                            @Html.HiddenFor(model => model.TaskData.Type)
+                            @Html.HiddenFor(model => model.TaskData.Createdby)
+                            @Html.HiddenFor(model => model.TaskData.Createddate)
+                            @Html.HiddenFor(model => model.TaskData.Type)
+                            @*@Html.HiddenFor(model => model.TaskData.CategoryId)*@
+                            @Html.HiddenFor(model => model.TaskData.Updateby)
+                            @Html.HiddenFor(model => model.TaskData.Updatedate)
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Task Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.TaskData.Taskname, new { Class = "form-control col-md-7 col-xs-12", required = "true" })
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Project Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Projectid, ViewBag.ProjectByEmployeeId as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", required = "true" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Start Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.TaskData.Startdate, "{0:dd-MMM-yyyy}", new { Class = "form-control col-md-7 col-xs-12 datepicker", required = "true" })
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            End Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.TaskData.Duedate, "{0:dd-MMM-yyyy}", new { Class = "form-control col-md-7 col-xs-12 datepicker" })
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Severity <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Severityid, ViewBag.Severity as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", required = "true" })
+
+
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Category <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Categoryid, ViewBag.Category as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", required = "true" })
+
+
+                        </div>
+                    </div>
+                    @*@if (Convert.ToInt32(Session["Role_ID"].ToString()) == 1 || Convert.ToInt32(Session["Role_ID"].ToString()) == 2 || Convert.ToInt32(Session["Role_ID"].ToString()) == 1004)
+                        {*@
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Assigned To <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Assignto, ViewBag.EmployeeByProject as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", required = "true" })
+
+
+                        </div>
+                    </div>
+                    @*}*@
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Status
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Statusid, ViewBag.AllStatus as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+                            @Html.HiddenFor(model => model.TaskData.Statusid)
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Description
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextAreaFor(model => model.TaskData.Descripition, new { Class = "form-control col-md-7 col-xs-12" })
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Reviewed By
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Reviewby, ViewBag.EmployeeByProject as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Review Result
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextAreaFor(model => model.TaskData.Result, new { Class = "form-control col-md-7 col-xs-12", Readonly = "true" })
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Upload File
+                        </label>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+
+
+
+                                <ul class="list-inline listphoto">
+                                    @{
+
+    foreach (var i in Model.AttachmentList)
+    {
+
+
+
+        if (i.Filetype == ".pdf")
+        {
+            <li>
+
+                <div class="thumbnail" style="width:110px;height:170px">
+                    <div class="image view view-first">
+                        @Html.HiddenFor(model => i.Id, new { id = "IDgambar" })
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/pdf.png" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+                        <a href="#" class="itemDelete">
+                            <center>
+                                <h5>Remove File</h5>
+                            </center>
+                        </a>
+                    </div>
+
+                </div>
+
+            </li>
+        }
+
+        else if (i.Filetype == ".xlsx" || i.Filetype == ".xls")
+        {
+            <li>
+
+                <div class="thumbnail" style="width:110px;height:170px">
+                    <div class="image view view-first">
+                        @Html.HiddenFor(model => i.Id, new { id = "IDgambar" })
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/xls-icon-3379.png" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+                        <a href="#" class="itemDelete">
+                            <center>
+                                <h5>Remove File</h5>
+                            </center>
+                        </a>
+                    </div>
+
+                </div>
+
+            </li>
+
+        }
+        else if (i.Filetype == ".doc" || i.Filetype == ".docx")
+        {
+            <li>
+
+                <div class="thumbnail" style="width:110px;height:170px">
+                    <div class="image view view-first">
+                        @Html.HiddenFor(model => i.Id, new { id = "IDgambar" })
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/doc.png" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+                        <a href="#" class="itemDelete">
+                            <center>
+                                <h5>Remove File</h5>
+                            </center>
+                        </a>
+                    </div>
+                </div>
+
+            </li>
+
+        }
+
+        else
+        {
+
+
+            <li>
+
+                <div class="thumbnail" style="width:110px;height:170px">
+                    <div class="image view view-first">
+                        @Html.HiddenFor(model => i.Id, new { id = "IDgambar" })
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="@i.Url" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+                        <a href="#" class="itemDelete">
+                            <center>
+                                <h5>Remove File</h5>
+                            </center>
+                        </a>
+                    </div>
+                </div>
+
+            </li>
+
+
+        }
+
+    }
+                                    }
+
+                                </ul>
+
+                                <form enctype="multipart/form-data">
+                                    <input id="Upload_file" name="Upload_File" type="file" multiple>
+                                </form>
+                            </div>
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+                <div class="item form-group">
+                    <div class="control-label col-md-6 col-sm-4 col-xs-12">
+                        @*<button type="submit" class="btn btn-success">Submit</button>*@
+                        @*<input type="submit" class="btn btn-primary" name="Command" value="Mark As In Progress" />
+                        <input type="submit" class="btn btn-success" name="Command" value="Mark As In Review" />*@
+
+                        @if (Model.TaskData.Statusid == 3 || Model.TaskData.Statusid == 2)
+                        {
+                            <input type="submit" class="btn btn-primary" name="Command" value="Mark As In Progress" />
+                        }
+                        @if (Model.TaskData.Statusid == 4 || Model.TaskData.Statusid == 9)
+                        {
+                            <input type="submit" class="btn btn-success" name="Command" value="Mark As In Review" />
+                        }
+                       
+
+                        <input type="submit" class="btn btn-info" name="Command" value="Edit" />
+                        @*<button type="button" class="btn btn-warning">Back To List</button>*@
+                        <a href="/Bugs/Index/" class="btn btn-warning">Back To List</a>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalActivity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        @Html.Partial("~/Views/PartialView/DayActivity.cshtml")
+
+
+
+
+    </div>
+
+
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+
+        //$('#TaskData_StartDate').daterangepicker({
+        //    singleDatePicker: true,
+        //    calender_style: "picker_4"
+        //}, function (start, end, label) {
+        //    console.log(start.toISOString(), end.toISOString(), label);
+        //});
+
+        //$('#TaskData_DueDate').daterangepicker({
+        //    singleDatePicker: true,
+        //    calender_style: "picker_4"
+        //}, function (start, end, label) {
+        //    console.log(start.toISOString(), end.toISOString(), label);
+        //});
+
+        $(document).ready(function () {
+
+            $("#BtnActivity").on('click', function (ev) {
+
+                $("#ModalActivity").modal('show');
+            });
+
+            $("#BtnSubmitActivity").on('click', function (ev) {
+                ev.preventDefault();
+                var url = "@Url.Action("SubmitActivityBugsLog", "Global")";
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: $('#formSub').serialize(),
+                    beforeSend: function () {
+                        $('#spinner').show();
+                    },
+                    complete: function () {
+                        $("#spinner").hide();
+                    },
+                    success: function (data) {
+                        if (data == "Ok") {
+                            alert("Save Successfuly");
+                            @*$.alert({
+                                title: 'Info',
+                                content: '<strong>Update Succesfull</strong>',
+                                confirmButton: 'Okay',
+                                confirmButtonClass: 'btn-primary',
+                                icon: 'fa fa-check-square',
+                                animation: 'zoom',
+                                confirm: function () {
+                                    window.location.href = "@Url.Action("Index", "TimeUnit")";
+                                }
+                            });*@
+
+                            } else {
+                            alert("Save Failure");
+                            //$.alert({
+                            //    title: 'Alert',
+                            //    content: '<strong>Update Failure</strong>',
+                            //    confirmButton: 'Okay',
+                            //    confirmButtonClass: 'btn-primary',
+                            //    icon: 'fa fa-info',
+                            //    animation: 'zoom',
+                            //    confirm: function () {
+                            //    }
+                            //});
+                        }
+                    },
+                    error: function (data) {
+                        alert("Save Failure");
+                        //$.alert({
+                        //    title: 'Alert',
+                        //    content: '<strong>Update Failure</strong>',
+                        //    confirmButton: 'Okay',
+                        //    confirmButtonClass: 'btn-primary',
+                        //    icon: 'fa fa-info',
+                        //    animation: 'zoom',
+                        //    confirm: function () {
+                        //    }
+                        //});
+                    }
+                });
+            });
+
+            $('#Upload_file').fileinput({
+                //language: 'es',
+                language: 'eN',
+                uploadAsync: 'false',
+                uploadUrl: '/Global/UploadFileEditBug/', // you must set a valid URL here else you will get an error
+                allowedFileExtensions: ['jpg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xlx', 'xlsx'],
+                overwriteInitial: false,
+                maxFileSize: 100000,
+                maxFilesNum: 10,
+
+                //allowedFileTypes: ['image', 'video', 'flash'],
+                slugCallback: function (filename) {
+                    return filename.replace('(', '_').replace(']', '_');
+                }
+            });
+
+
+            $('.listphoto').on('click', '.itemDelete', function (e) {
+                e.preventDefault();
+                var getid = $(this).closest('li').find("#IDgambar").val();
+                $(this).closest('li').remove();
+
+                var urldeleteattachment = "/Global/DeleteAttachmentDataEditBug/" + getid;
+                //alert('ok');
+                $.ajax({
+                    url: urldeleteattachment,  //Server script to process data
+
+                    type: 'POST',
+
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    beforeSend: function () {
+
+                    },
+                    success: function (data) {
+
+
+                    }
+                });
+
+
+            });
+
+
+
+            function toDateEndDate(value) {
+                var from = value.split("-");
+                //return new Date(from[2], from[1] - 1, from[0]);
+                //var dateconvert= 
+                var get_month = ("JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(from[1]) / 3 + 1);
+                var get_year = from[2];
+                var get_date = from[0];
+                var date = get_month + '/' + get_date + '/' + get_year;
+                return date;
+            }
+
+            function toDateStartDate(value) {
+                var from = value.split("-");
+                //return new Date(from[2], from[1] - 1, from[0]);
+                //var dateconvert= 
+                var get_month = ("JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(from[1]) / 3 + 1);
+                var get_year = from[2];
+                var get_date = from[0];
+                var date = get_month + '/' + get_date + '/' + get_year;
+                return date;
+            }
+
+            $('#TaskData_StartDate').val();
+            var dateEnd = new Date(toDateEndDate($("#TaskData_DueDate").val()));
+            var dateStart = new Date(toDateStartDate($("#TaskData_StartDate").val()));
+
+            $("#TaskDayActivity_0__StartDate").datepicker({
+                autoclose: true,
+                format: 'dd-M-yyyy',
+                endDate: dateEnd,
+                startDate: dateStart
+                //  maxDate: new Date(2017, 30, 7),
+                //dateFormat: "yy-mm-dd"
+            });
+
+            $.each($('#dataTable tbody tr'), function (no, trElem) {
+
+                var dateEnd = new Date(toDateEndDate($("#TaskData_DueDate").val()));
+                var dateStart = new Date(toDateStartDate($("#TaskData_StartDate").val()));
+
+                $("#TaskDayActivity_" + (parseInt(no)) + "__StartDate").datepicker({
+                    autoclose: true,
+                    format: 'dd-M-yyyy',
+                    endDate: dateEnd,
+                    startDate: dateStart
+                    //  maxDate: new Date(2017, 30, 7),
+                    //dateFormat: "yy-mm-dd"
+                });
+
+
+
+            });
+
+            $("#dataTable tbody tr").find('.remove').click(function (e) {
+                var area = $(this).closest('tr');
+                area.remove();
+            });
+
+            $("#AddRow").click(function (e) {
+                e.preventDefault();
+                var $tableBody = $("#dataTable");
+                //var tables =  $('#dataTable').DataTable({scroller:true});
+
+                ////$("#dataTable").scrollTop(50);
+                //tables.row( 100 ).scrollTo();
+                //$('html,body').animate({scrollTop: $("#dataTable").offset().top},300);
+                var $trLast = $tableBody.find("tr:last");
+                var $trNew = $trLast.clone();
+
+                var suffix = $trNew.find(':input:first').attr('name').match(/\d+/);
+                var suffixNow = (parseInt(suffix) + 1);
+                var dateEnd = new Date(toDateEndDate($("#TaskData_DueDate").val()));
+                var dateStart = new Date(toDateStartDate($("#TaskData_StartDate").val()));
+
+
+                //$trNew.find(".chosen").remove();
+                $trNew.find("td:last").html('<a href="#" class="remove"><i class="glyphicon glyphicon-trash"></i></a>');
+                //$trNew.focus();
+                //$.each($trNew.find('#testing'), function (i, val) {
+                //    //var oldN = $(this).attr('name');
+                //    //var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                //    //$(this).attr('name', newN);
+                //    //var oldclass = $(this).attr('id');
+                //    //var newclass = oldclass.replace('_' + suffix + '_', '_' + (parseInt(suffix) + 1) + '_');
+                //    //var yuhu = '';
+                //});
+
+                //$trNew.find('select.chosen').each(function () {
+                //    $(this).removeClass().removeAttr('id').css('display', 'block').next().remove();
+                //    $(this).attr('name', 'projectClass ' + suffixNow);
+                //    $(this).attr('id', 'projectClass ' + suffixNow);
+                //    $(this).addClass('projectClass form-control chosen');
+
+                //    $(this).chosen({ width: '141px' });
+                //    //$(this).css('width', 300);
+                //});
+
+                //var rowpos = $('#dataTable tr:last').position();
+                //$('table#dataTable tr:last td:first input').focus();
+                //$('#bodydetailtimesheet').scrollTop(rowpos.top);
+                //$('html, body').animate({ scrollTop: 0 }, 1200);
+                //$('html, body').animate({ scrollTop: $('#bodydetailtimesheet').offset().down }, 'fast');
+
+                //$("#dataTable").scrollBy(0, 100);
+                //$('html, body').animate({ scrollTop: $trLast }, 200);
+                $.each($trNew.find(':input'), function (i, val) {
+                    var type = $(this).attr('type');
+                    $(this).val('');
+
+                    //var oldclass = $(this).attr('name');
+                    //if (oldclass.toLowerCase().indexOf("projectid") >=1)
+                    //{
+                    //    var newclass = oldclass.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                    //    $(this).attr('id', newclass);
+                    //}
+                    //var newclass = oldclass.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+
+                    var oldId = $(this).attr('id');
+                    var newId = oldId.replace('_' + suffix + '_', '_' + (parseInt(suffix) + 1) + '_');
+                    $(this).attr('id', newId);
+
+                    var oldN = $(this).attr('name');
+
+                    //if (oldN.toLowerCase().indexOf("projectid") >= 1) {
+                    //    var newclass = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                    //    $(this).attr('id', newclass);
+                    //}
+
+                    if (oldN) {
+                        if (oldN.toLowerCase().indexOf("projectid") >= 1) {
+                            var newclass = "project_" + oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                            $(this).attr('id', newclass);
+                        }
+                        var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                        //$(this).attr('id', newN);
+                        $(this).attr('name', newN);
+                    }
+
+
+                    if ($(this).hasClass('ProjectClassCode')) {
+                        var newclass = "ProjectClassCodeNumber form-control";
+                        $(this).attr('class', newclass);
+
+                        //$(this).find('optgroup').remove().end();
+                        //$(this).find('option').remove().end().append('<option value>Select Activity</option>');
+                    }
+
+                    if ($(this).is('select') == false) {
+                        var type = $(this).attr('type');
+                        //$(".chzn-select").chosen();
+                        //if ($(this).hasClass("chosen") || $(this).hasClass("default"))
+                        //{
+                        //}
+                        //else
+                        //{
+                        //    $(this).attr('disabled', 'disabled');
+                        //}
+
+
+
+                        if (type == "number") {
+                            $(this).val(0);
+                        }
+                    } else {
+                        if ($(this).hasClass('ddlActivity')) {
+                            $(this).find('optgroup').remove().end();
+                            $(this).find('option').remove().end().append('<option value>Select Activity</option>');
+                        }
+                    }
+
+                    if ($(this).is('textarea') == true) {
+                        $(this).val('');
+                    }
+
+                    $(this).removeClass("input-validation-error");
+
+                });
+
+
+
+                $.each($trNew.find('a.showRemark'), function (i, val) {
+                    var oldN = $(this).attr('name');
+                    var newN = oldN.replace('[' + suffix + ']', '[' + (parseInt(suffix) + 1) + ']');
+                    $(this).attr('name', newN);
+                });
+
+
+                //$trLast.after($trNew);
+                $tableBody.append($trNew);
+
+                //var elem = document.getElementsByName("[4].projectcode");  
+                //elem.scrollIntoView(true); 
+                //$trLast.hide().fadeIn('slow');
+                //$tableBody.row( suffixNow ).scrollTo();
+                //$tableBody.rowReordering();
+
+                $("#TaskDayActivity_" + (parseInt(suffix) + 1) + "__StartDate").datepicker({
+                    autoclose: true,
+                    format: 'dd-M-yyyy',
+                    endDate: dateEnd,
+                    startDate: dateStart
+                    //  maxDate: new Date(2017, 30, 7),
+                    //dateFormat: "yy-mm-dd"
+                });
+
+                //$("#project_["+ suffixNow +"].ProjectID").combogrid({
+                //    debug: true,
+                //    searchButton: false,
+                //    //resetButton: true,
+                //    okIcon: false,
+                //    munit: '5px',
+                //    url: '/Timesheet/GetProject',
+                //    //replaceNull: true,
+                //    colModel: [{ 'columnName': 'id', 'width': '10', 'label': 'id', 'hidden': true }, { 'columnName': 'ProjectCode', 'width': '30', 'label': 'Project Code' }, { 'columnName': 'ProjectName', 'width': '30', 'label': 'Short Description' }],
+                //    select: function (event, ui) {
+                //        //console.log(ui.item);
+                //        //$("#PayrollGroupToComponentList_0__payroll_component_id").val(ui.item.id);
+                //        $("#idproject").val(ui.item.ProjectCode);
+                //        return false;
+                //    }
+                //});
+                //$('.chosen').chosen('destroy');
+                //$(".chosen").chosen(width: '141px');
+                //$(".chosen").show();
+
+                //$('.chosen').remove();
+                //$(".chosen").chosen({ max_selected_options: 1 });
+                //onshowelement();
+                //$("project__" + suffixNow + "__ProjectID_chosen").chosen('destroy');
+                //$("project__" + suffixNow + "__ProjectID_chosen").chosen({width: '141px'});
+                //$("project__" + suffixNow + "__ProjectID_chosen").chosen({ max_selected_options: 1 });
+                //"project__3__ProjectID_chosen
+
+                // var w = $(window);
+                ////var row = $tableBody.find('tr').eq( line );
+
+                //if ($trLast.length){
+                //    $('html,body').animate({scrollTop: $trLast.offset().top }, 1000 );
+                //}
+
+                //var form = $("form")
+                //    .removeData("validator")
+                //    .removeData("unobtrusiveValidation");
+                //$.validator.unobtrusive.parse(form);
+                //$('.dataTables_scrollBody').scrollTop($('.dataTables_scrollBody')[0].scrollHeight);
+                $trNew.find('a.remove').click(function (e) {
+                    e.preventDefault();
+                    $(this).parent().parent().remove();
+
+                    //$("#datatable tbody tr").each(function (index, value) {
+                    //    console.log(value);
+                    //    $(value).find('input[id$="__No"]').val((index + 1));
+                    //})
+                });
+                //$('tr.data-wrapper:last select#testing').chosen();
+                //$(".chosen-select").chosen();
+            });
+
+        });
+
+    </script>
+}

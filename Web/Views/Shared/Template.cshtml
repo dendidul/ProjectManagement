@@ -1,0 +1,473 @@
+﻿
+
+@inject CookieManager.ICookie _httpCookie
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ALBAPRO </title>
+    <link rel="icon" href="~/Images/icon.ico">
+    <!-- Bootstrap -->
+    <link href="~/Content/jquery-ui.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/selectpicker/css/bootstrap-select.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/Content/bootstrap-datepicker3.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-timepicker.min.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.min.css" />
+    <!-- Font Awesome -->
+    <link href="~/Content/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="~/Content/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="~/Content/assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    <!-- Custom Theme Style -->
+    @*<link href="~/Content/assets/build/css/custom.min.css" rel="stylesheet">*@
+    <link href="~/Content/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="~/Content/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="~/Content/assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+
+
+    <link href="~/Content/assets/vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+    <link href="~/Content/assets/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+    <link href="~/Content/assets/vendors/dropzone/dist/min/dropzone.min.css" rel="stylesheet">
+
+    <link href="~/Content/assets/FileUpload/css/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+  
+    <link href="~/Content/assets/build/css/custom.min.css" rel="stylesheet">
+    @*<link href="~/Content/selectpicker/css/main.css" rel="stylesheet" />*@
+   
+
+    <style>
+        .spinner .loading {
+            z-index: 1000;
+            margin: 300px auto;
+            padding: 10px;
+            width: 80px;
+            height: 80px;
+            border-radius: 100px;
+            filter: alpha(opacity=100);
+            opacity: 1;
+            -moz-opacity: 1;
+            background: #e8d6d6 url("../../Content/spinner.gif") center no-repeat;
+            /*background:#e8d6d6 url("img/loading_spinner.gif") center no-repeat ;*/
+        }
+
+        .spinner {
+            position: fixed;
+            z-index: 999;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background-color: Black;
+            filter: alpha(opacity=60);
+            opacity: 0.6;
+            -moz-opacity: 0.8;
+            display: none;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+            .dropdown-submenu > .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-top: -6px;
+                margin-left: -1px;
+                -webkit-border-radius: 0 6px 6px 6px;
+                -moz-border-radius: 0 6px 6px 6px;
+                border-radius: 0 6px 6px 6px;
+            }
+
+            .dropdown-submenu > a:after {
+                display: block;
+                content: " ";
+                float: right;
+                width: 0;
+                height: 0;
+                border-color: transparent;
+                border-style: solid;
+                border-width: 5px 0 5px 5px;
+                border-left-color: #cccccc;
+                margin-top: 5px;
+                margin-right: -10px;
+            }
+
+            .dropdown-submenu:hover > a:after {
+                border-left-color: #ffffff;
+            }
+
+            .dropdown-submenu.pull-left {
+                float: none;
+            }
+
+                .dropdown-submenu.pull-left > .dropdown-menu {
+                    left: -100%;
+                    margin-left: 10px;
+                    -webkit-border-radius: 6px 0 6px 6px;
+                    -moz-border-radius: 6px 0 6px 6px;
+                    border-radius: 6px 0 6px 6px;
+                }
+    </style>
+</head>
+<body class="nav-md footer_fixed">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="#" class="site_title">
+                            @*<i class="fa fa-paw"></i>*@
+                            <span><img src="~/Images/Banner.png" width="207px" /></span>
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile">
+                        <div class="profile_pic">
+                            @if (_httpCookie.Get("ImageProfile") != null)
+                            {
+                                <img src="@_httpCookie.Get("ImageProfile")" alt="..." class="img-circle profile_img">
+                            }
+                            else
+                            {
+                                <img src="~/Images/photo.jpg" alt="..." class="img-circle profile_img">
+                            }
+
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            @if (_httpCookie.Get("Employee") != null)
+                            {
+                                <h2>@_httpCookie.Get("Employee")</h2>
+                            }
+                            else
+                            {
+                               // Redirect("/Login/Login/", true);
+                            }
+
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+
+                            <h3>&nbsp;</h3>
+                            <ul class="nav side-menu">
+                                @Html.Partial("menu")
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        @*<a data-toggle="tooltip" data-placement="top" title="Settings">
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                            </a>
+                            <a data-toggle="tooltip" data-placement="top" title="Logout">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                            </a>*@
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu navbar-fixed-top">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+
+                        </div>
+                        @*<ul class="nav navbar-nav navbar-left">
+
+                            </ul>*@
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    @if (_httpCookie.Get("ImageProfile") != null)
+                                    {
+                                        <img src="@_httpCookie.Get("ImageProfile")" alt="">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Images/photo.jpg" alt="">
+                                    }
+
+                                   
+                                    @_httpCookie.Get("Employee")
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    @*<li><a href="/Profile/Index/@Session["employeeid"]"> Profile</a></li>*@
+                                    <li><a href="/Profile/Index/"> Profile</a></li>
+
+                                    <li><a href="/Login/Logout/"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <label id="ProjectName"> @_httpCookie.Get("ProjectName")</label>
+                                    <label id="ProjectName"></label>
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right" id="ListProject">
+                                    @Html.Partial("ListProjects")
+                                   
+                                </ul>
+                            </li>
+
+                          
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <div class="">
+                    <div class='progress' id="progress_div">
+                        <div class='bar' id='bar1'></div>
+                        <div class='percent' id='percent1'></div>
+                    </div>
+                    @RenderBody()
+                </div>
+                <div class="row">
+                    @*<div class="modal fade" id="myModal" role="dialog">
+                    </div>*@
+                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="myModal">
+
+                    </div>
+                    </div>
+                <br />
+                <br />
+
+                <!-- /page content -->
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        Template by Gentelella - ALBA Project Management System
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+
+
+            <div id="spinner" class="spinner">
+                <div class="loading">
+                </div>
+                <label class="btn btn-default">Processing...</label>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/Content/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Content/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery-ui-1.9.2.custom.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Content/assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="~/Content/assets/vendors/nprogress/nprogress.js"></script>
+
+    <script src="~/Content/assets/FileUpload/js/plugins/sortable.js" type="text/javascript"></script>
+    <script src="~/Content/assets/FileUpload/js/fileinput.js" type="text/javascript"></script>
+
+    <script src="~/Content/assets/vendors/dropzone/dist/min/dropzone.min.js"></script>
+
+    <script src="~/Content/assets/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="~/Content/assets/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/assets/vendors/moment/min/moment.min.js"></script>
+    @*<script src="~/Content/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>*@
+
+    <script src="~/Content/assets/vendors/iCheck/icheck.min.js"></script>
+
+    <script src="~/Content/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/bootstrap-timepicker.min.js"></script>
+    <script src="~/Content/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="~/Content/assets/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
+
+
+    <!-- Datatables -->
+    <script src="~/Content/assets/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Content/assets/vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
+    <script src="~/Content/assets/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="~/Content/assets/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="~/Content/assets/vendors/pdfmake/build/vfs_fonts.js"></script>
+
+
+
+
+    <script src="~/Content/jquery.confirm.js"></script>
+    @*<script src="~/Content/selectpicker/js/libs.js"></script>*@
+    <script type="text/javascript" src="~/Content/selectpicker/js/bootstrap-select.js"></script>
+    <script src="~/Content/assets/Common/Common.js"></script>
+    <script src="~/Content/assets/Common/Modal.js"></script>
+    @*<script type="text/javascript" src="~/Content/selectpicker/js/prism.js"></script>*@
+    <!-- Custom Theme Scripts -->
+    <script src="~/Content/assets/build/js/custom.min.js"></script>
+    
+    <script type="text/javascript">
+        $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function (event) {
+            //$('ul.dropdown-menu [data-toggle=dropdown]').on('mouseenter click tap', function
+
+            //(event) {
+            // Avoid following the href location when clicking
+            event.preventDefault();
+            // Avoid having the menu to close when clicking
+            event.stopPropagation();
+            // If a menu is already open we close it
+            //$('ul.dropdown-menu [data-toggle=dropdown]').parent().removeClass('open');
+            // opening the one you clicked on
+
+            //$(this).parent().toggle("show");
+
+            var getclass = $(this).parent().prop('className');
+            //alert(getclass);
+
+            if (getclass == "menu-item dropdown dropdown-submenu") {
+                $(this).parent().addClass('open');
+                var menu = $(this).parent().find("ul");
+                var menupos = menu.offset();
+
+                if ((menupos.left + menu.width()) + 30 < $(window).width()) {
+                    var newpos = -menu.width();
+                } else {
+                    var newpos = $(this).parent().width();
+                }
+                menu.css({ left: newpos });
+                menu.show();
+            }
+            else {
+                $(this).parent().removeClass('open');
+                var menu = $(this).parent().find("ul");
+                menu.hide();
+            }
+
+
+        });
+
+
+
+
+        $(document).ready(function () {
+
+            $('.datepicker').datepicker({
+                autoclose: true,
+                format: 'dd-M-yyyy',
+                //dateFormat: "yy-mm-dd"
+            });
+
+            $("select").removeClass('form-control');         
+
+            $("select").selectpicker({ liveSearch: true });
+
+            $('.datetimepicker').datetimepicker({
+
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-arrows ',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
+
+            $("#ProjectList li").click(function () {
+                //alert($(this).attr('value'));
+                var getvalue = $(this).attr('value');
+                var gettext = $(this).text();
+              //  alert(getvalue + " "+ gettext);
+              
+               
+                $("#ProjectName").text(gettext);
+                $.ajax({
+                   // url: "/Menu/ChangeProject/",
+
+                      url: "@Url.Action("ChangeProject","Global")",
+                    type: "POST",
+                    //data: JSON.stringify({
+                    //    id: getvalue,
+                    //    ProjectName: gettext
+                    //}),
+                     data: { id: getvalue, ProjectName: gettext },
+                 
+                    success: function (result) {
+                        location.reload();
+
+                        //untuk sementara ini untuk pindah menjadi Role Admin
+                    }
+                })
+
+            });
+
+            $("#AllProjects").click(function () {
+                //alert($(this).attr('value'));
+                var getvalue = $(this).attr('value');
+                var gettext = $(this).text();
+               
+                $("#ProjectName").text(gettext);
+                $.ajax({
+                    //url: "/Menu/ChangeProject/",
+                    url: "@Url.Action("ChangeProject","Global")",
+                    type: "POST",
+                    //data: JSON.stringify({
+                    //    id: getvalue,
+                    //    ProjectName: gettext
+                    //}),
+                    data: { id: getvalue, ProjectName: gettext },
+                   
+                    success: function (result) {
+                        location.reload();
+
+                        //untuk sementara ini untuk pindah menjadi Role Admin
+                    }
+                })
+
+            });
+        });
+
+
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

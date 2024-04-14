@@ -1,0 +1,445 @@
+﻿@model IEnumerable<Core.Dto.PMDb.NewsFeedModels>
+
+
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+<style>
+    canvas {
+        width: 100% !important;
+        max-width: 800px;
+        height: auto !important;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-md-8">
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Recent Activity</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <ul class="list-unstyled msg_list">
+                    @{
+                        foreach (var i in Model)
+                        {
+                            <li>
+                                <a style="width:600px" href="@Url.Action("Details","Home",new{id = i.TaskId})" target="_blank">
+                                    <span class="image">
+                                        @*<img src="~/Content/assets/images/picture.jpg" alt="img" />*@
+                                        @if (i.PhotoUrl != null)
+                                        {
+                                            <img src="@i.PhotoUrl" alt="img" style="width:68px;height:68px" />
+                                        }
+                                        else
+                                        {
+                                            <img src="~/Images/photo.jpg" alt="img" style="width:60px;height:68px" />
+                                        }
+
+
+                                    </span>
+                                    <span>
+                                        @*<span><b>@i.EmployeeName&nbsp;@i.StatusName @i.TypeName</b></span>*@
+                                        <span><b>@i.StatusName</b></span>
+                                        <span class="time"></span>
+
+                                    </span>
+
+                                    <span class="message">
+                                        @i.TaskName
+                                        @*Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that*@
+                                    </span>
+                                </a>
+                            </li>
+
+                        }
+                        <li>
+                            <a style="width:600px" href="@Url.Action("AllActivity", "Home")" class="btn btn-info"> View All Activity </a>
+                        </li>
+                    }
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Project Progress</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <center>
+                    <span class="chart" data-percent="0">
+                        <span class="percent"></span>
+                    </span>
+                </center>
+
+                @*<canvas id="TaskProgress"></canvas>*@
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Task Progress</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="TaskProgress"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Bugs Progress</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <canvas id="BugsProgress"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@section scripts {
+    <script src="~/Content/assets/vendors/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            document.onreadystatechange = function(e) {
+                if (document.readyState == "interactive") {
+                    var all = document.getElementsByTagName("*");
+                    for (var i = 0, max = all.length; i < max; i++) {
+                        set_ele(all[i]);
+                    }
+                }
+            }
+
+            function check_element(ele) {
+                var all = document.getElementsByTagName("*");
+                var totalele = all.length;
+                var per_inc = 100 / all.length;
+
+                if ($(ele).on()) {
+                    var prog_width = per_inc + Number(document.getElementById("progress_width").value);
+                    document.getElementById("progress_width").value = prog_width;
+                    $("#bar1").animate({ width: prog_width + "%" }, 10, function() {
+                        if (document.getElementById("bar1").style.width == "100%") {
+                            $(".progress").fadeOut("slow");
+                        }
+                    });
+                }
+
+                else {
+                    set_ele(ele);
+                }
+            }
+
+            function set_ele(set_element) {
+                check_element(set_element);
+            }
+
+
+
+            //$('.chart').data('easyPieChart').animate(30);
+
+            $('.chart').easyPieChart({
+                animate: 2000,
+
+                lineWidth: 18,
+                barColor: '#26B99A',
+                trackColor: '#fff',
+                onStep: function(from, to, percent) {
+                    $(this.el).find('.percent').text(Math.round(percent));
+                }
+
+            });
+
+            $.ajax({
+                url: "/Global/GetProgressProject/",
+                type: "POST",
+                //data: JSON.stringify({
+                //    id: getvalue,
+                //    ProjectName: gettext
+                //}),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(result) {
+                    //location.reload();
+                    $('.chart').data('easyPieChart').update(result);
+
+                    //untuk sementara ini untuk pindah menjadi Role Admin
+                }
+            })
+            //$('.chart').data('easyPieChart').update(40);
+            //update instance after 5 sec
+            setTimeout(function() {
+                $.ajax({
+                    url: "/Global/GetProgressProject/",
+                    type: "POST",
+                    //data: JSON.stringify({
+                    //    id: getvalue,
+                    //    ProjectName: gettext
+                    //}),
+                    cache: false,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(result) {
+                        //location.reload();
+                        $('.chart').data('easyPieChart').update(result);
+
+                        //untuk sementara ini untuk pindah menjadi Role Admin
+                    }
+                })
+                //$('.chart').data('easyPieChart').update(30);
+            }, 120000);
+
+
+
+
+
+            Chart.defaults.global.legend = {
+                enabled: false
+            };
+            //$('#datatable').dataTable();
+            // Doughnut chart
+            //var ctx = document.getElementById("canvasDoughnut");
+            //var ctx = document.getElementById("canvasDoughnut");
+            //var data = {
+            //    labels: [
+            //      //"Dark Grey",
+            //      //"Purple Color",
+            //      //"Gray Color",
+            //      "Task Activity",
+            //      "Bugs"
+            //    ],
+            //    datasets: [{
+            //        //data: [120, 50, 140, 180, 100],
+            //        data: [180, 100],
+            //        backgroundColor: [
+            //          //"#455C73",
+            //          //"#9B59B6",
+            //          //"#BDC3C7",
+            //          "#26B99A",
+            //          "#3498DB"
+            //        ],
+            //        hoverBackgroundColor: [
+            //          //"#34495E",
+            //          //"#B370CF",
+            //          //"#CFD4D8",
+            //          "#36CAAB",
+            //          "#49A9EA"
+            //        ]
+
+            //    }]
+            //};
+
+            //var canvasDoughnut = new Chart(ctx, {
+            //    type: 'doughnut',
+            //    tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+            //    data: data
+            //});
+
+
+
+
+            $.ajax({
+                url: "/Global/GetTaskProgressBar/",
+                type: "POST",
+                //data: JSON.stringify({
+                //    id: getvalue,
+                //    ProjectName: gettext
+                //}),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(result) {
+                    //location.reload();
+                    //$('.chart').data('easyPieChart').update(result);
+                    var ctx = document.getElementById("TaskProgress");
+                    var data = {
+                        labels: [
+
+                            "Completed",
+                            "Not Completed"
+                        ],
+                        datasets: [{
+                            data: [result.Completed, result.NotCompleted],
+                            backgroundColor: [
+
+                                "#26B99A",
+                                "#3498DB"
+                            ],
+                            hoverBackgroundColor: [
+
+                                "#36CAAB",
+                                "#49A9EA"
+                            ]
+
+                        }]
+                    };
+                    var TaskProgressnut = new Chart(ctx, {
+                        type: 'doughnut',
+                        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+                        data: data
+                    });
+
+                    //untuk sementara ini untuk pindah menjadi Role Admin
+                }
+            })
+
+
+
+
+            $.ajax({
+                url: "/Global/GetBugsProgressBar/",
+                type: "POST",
+                //data: JSON.stringify({
+                //    id: getvalue,
+                //    ProjectName: gettext
+                //}),
+                cache: false,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(result) {
+                    //location.reload();
+                    //$('.chart').data('easyPieChart').update(result);
+                    var ctx = document.getElementById("BugsProgress");
+                    var data = {
+                        labels: [
+
+                            "Completed",
+                            "Not Completed"
+                        ],
+                        datasets: [{
+                            data: [result.Completed, result.NotCompleted],
+                            backgroundColor: [
+
+                                "#26B99A",
+                                "#3498DB"
+                            ],
+                            hoverBackgroundColor: [
+
+                                "#36CAAB",
+                                "#49A9EA"
+                            ]
+
+                        }]
+                    };
+
+                    var BugsProgressnut = new Chart(ctx, {
+                        type: 'doughnut',
+                        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+                        data: data
+                    });
+
+                    //untuk sementara ini untuk pindah menjadi Role Admin
+                }
+            })
+
+
+
+
+
+
+
+
+
+
+        });
+    </script>
+}
+
+
+
