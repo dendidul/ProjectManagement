@@ -263,7 +263,7 @@ namespace Application.Repositories.NewsFeed
                         ta.id as TaskId,
                         emp.id as EmployeeId,
 						ta.StartDate as start,
-						ta.DueDate as [end],
+						ta.DueDate as end,
                        -- ta.StatusId as StatusId,
                         --emp.PhotoUrl as PhotoUrl,
                         --ta.ProjectId,

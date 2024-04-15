@@ -19,7 +19,8 @@ namespace Web.Controllers
 
         private readonly Web.Utils.CookieManager _cookieManager;
         private readonly IRolesMenuWrapper _rolesMenuWrapper;
-             
+        
+
 
         #endregion
 
@@ -40,7 +41,7 @@ namespace Web.Controllers
 
 
 
-            ) : base(rolesMenuWrapper, cookieManager)
+            ) : base(rolesMenuWrapper, cookieManager,globalController)
         {          
 
             _logger = logger;

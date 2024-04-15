@@ -288,7 +288,7 @@ namespace Application.Repositories.Task
                             pr.ProjectsName as ProjectName,
                             ta.TaskName as TaskName,
                             tg.TaskGroupName as TaskGroup,
-                            s.SeverityName as Severity,
+                           -- s.SeverityName as Severity,
                             st.StatusName as StatusName,
                             pr.Id as ProjectId,
                             ta.reviewby as ReviewBy,
@@ -541,15 +541,19 @@ namespace Application.Repositories.Task
                             CONCAT(emp.FirstName, ' ', emp.LastName) as ReviewBy,
                             ta.Descripition as Description,
                             ta.id as Id,
+                            ta.projectid as ProjectId,
                             pr.ProjectsName as ProjectName,
                             ta.TaskName as TaskName,
+                            ta.Taskgroupid as TaskGroupId,
                             tg.TaskGroupName as TaskGroup,
                             s.SeverityName as Severity,
                             st.StatusName as StatusName,
+                            ta.Type,
 							case when ta.Type = 1 then 'Task'
 							when ta.Type = 2 then 'Bugs'
 							else ''
-							end as TypeName
+							end as TypeName,
+ta.assignto as AssignedTo
 
                              from Task ta
                             left join Employee emp on ta.ReviewBy = emp.id

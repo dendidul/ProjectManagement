@@ -59,9 +59,9 @@ namespace Application.Repositories.RolesProjectEmployee
 
             var data = db.UserProjectModels.FromSqlInterpolated<UserProjectModel>($@"select 
                         rpe.ProjectID,
-                        p.ProjectsName,
+                        p.ProjectsName as ProjectName,
                         Emp.ID as EmployeeId, emp.Email,
-                        concat((coalesce (emp.FirstName, '')),' ',(coalesce (emp.LastName, ''))) AS EmployeeName ,,
+                        concat((coalesce (emp.FirstName, '')),' ',(coalesce (emp.LastName, ''))) AS EmployeeName ,
                         r.RolesName,
                         case when emp.PhotoUrl is null then '#'
                         else

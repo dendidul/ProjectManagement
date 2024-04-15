@@ -19,6 +19,8 @@ namespace Web.Controllers
 
         private readonly Web.Utils.CookieManager _cookieManager;
         private readonly IRolesMenuWrapper _rolesMenuWrapper;
+        private readonly GlobalController _globalController;
+
 
 
         #endregion
@@ -40,9 +42,10 @@ namespace Web.Controllers
         
             Web.Utils.CookieManager cookieManager,
             CMSAuthorize byPassRoute,
-            ILogger<MenuController> logger
+            ILogger<MenuController> logger,
+              GlobalController globalController
 
-            ) : base(rolesMenuWrapper, cookieManager)
+            ) : base(rolesMenuWrapper, cookieManager, globalController)
         {
             _rolesMenuWrapper = rolesMenuWrapper;
             _menuWrapper = menuWrapper;
@@ -51,11 +54,14 @@ namespace Web.Controllers
             _cookieManager = cookieManager;
             _byPassRoute = byPassRoute;
             _logger = logger;
-          
+            _globalController = globalController;
+
 
         }
 
-     
+
+        
+
 
 
         public ActionResult IndexMenu()

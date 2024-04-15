@@ -6,6 +6,7 @@ using Application.Wrapper.Task;
 using Application.Wrapper.Attachment;
 using Application.Wrapper.NewsFeed;
 
+
 namespace Web.Controllers
 {
     public class BackLogController : SidebarMenuController
@@ -13,6 +14,8 @@ namespace Web.Controllers
         private readonly Web.Utils.CookieManager _cookieManager;
         private readonly IRolesMenuWrapper _rolesMenuWrapper;
         private readonly ILogger<BackLogController> _logger;
+        private readonly GlobalController _globalController;
+
 
         private readonly ITaskLogWrapper _taskLogWrapper;
         private readonly ITaskWrapper _taskWrapper;
@@ -32,13 +35,14 @@ namespace Web.Controllers
             ITaskWrapper taskWrapper,
             IAttachmentWrapper atttachmentWrapper,
             INewsFeedWrapper newsFeedWrapper
+,
+            GlobalController globalController
 
 
-
-            ) : base(rolesMenuWrapper, cookieManager)
+            ) : base(rolesMenuWrapper, cookieManager, globalController)
         {
 
-            _logger = logger;         
+            _logger = logger;
 
 
 
@@ -54,14 +58,11 @@ namespace Web.Controllers
             _taskWrapper = taskWrapper;
             _atttachmentWrapper = atttachmentWrapper;
             _newsFeedWrapper = newsFeedWrapper;
-
-
-
-
+            _globalController = globalController;
         }
 
 
-        
+
 
 
         public ActionResult Index()
@@ -74,6 +75,7 @@ namespace Web.Controllers
         {
 
             _cookieManager.SetCookie("CreateTask",Guid.NewGuid().ToString());
+           
             return View();
         }
 

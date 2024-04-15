@@ -15,6 +15,8 @@ namespace Web.Controllers
 
         private readonly Web.Utils.CookieManager _cookieManager;
         private readonly IRolesMenuWrapper _rolesMenuWrapper;
+        private readonly GlobalController _globalController;
+
 
 
         #endregion
@@ -31,16 +33,18 @@ namespace Web.Controllers
            IRolesMenuWrapper rolesMenuWrapper,
             ITaskWrapper taskWrapper,
              INewsFeedWrapper newsWrapper,
-             IAttachmentWrapper attachmentWrapper
+             IAttachmentWrapper attachmentWrapper,
+             GlobalController globalController
 
 
-           ) : base(rolesMenuWrapper, cookieManager)
+           ) : base(rolesMenuWrapper, cookieManager,globalController)
         {
 
             _logger = logger;
             _taskWrapper = taskWrapper;
             _newsWrapper = newsWrapper;
             _attachmentWrapper = attachmentWrapper;
+            _globalController = globalController;
 
             #region
 
