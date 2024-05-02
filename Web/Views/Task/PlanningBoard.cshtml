@@ -4,6 +4,31 @@
     Layout = "~/Views/Shared/Template.cshtml";
 }
 
+@*
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card-column">
+                <h3>To Do</h3>
+                <div class="card" draggable="true">Task 1</div>
+                <div class="card" draggable="true">Task 2</div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-column">
+                <h3>In Progress</h3>
+                <!-- Cards here -->
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-column">
+                <h3>Done</h3>
+                <!-- Cards here -->
+            </div>
+        </div>
+    </div>
+</div>*@
+
 
 
 <div class="row">
@@ -33,18 +58,28 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              
-             
+
+
                 <div class="col-md-4 profile_details">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Outstanding</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                               
-                            </ul>
+
+
+                            <div class="col-md-3">
+                                <div class="card-column">
+                                    <h2>Outstanding</h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+
+                                    </ul>
+                                    @* <div class="card" draggable="true">Task 1</div>
+                                    <div class="card" draggable="true">Task 2</div>*@
+                                </div>
+                            </div>
+
+
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content" style="height:600px">
@@ -59,7 +94,10 @@
                                         {
                                             <li>
                                                 <div class="x_panel">
-                                                    @Html.DisplayFor(modelitem => item.TaskName, new { Class = "form-control" })
+
+
+                                                    <div class="" draggable="true">@item.TaskName</div>
+
                                                 </div>
                                             </li>
                                         }
@@ -116,35 +154,49 @@
 
 @section scripts {
     <script type="text/javascript">
-     
-            $(document).ready(function () {
-                function FilterList(txtName,ulName) {
-                    // Declare variables
-                    var input, filter, ul, li, a, i, txtValue;
-                    input = document.getElementById(txtName);
-                    filter = input.value.toUpperCase();
-                    ul = document.getElementById(ulName);
-                    li = ul.getElementsByTagName('li');
 
-                    // Loop through all list items, and hide those who don't match the search query
-                    for (i = 0; i < li.length; i++) {
-                        a = li[i];
-                        txtValue = a.textContent || a.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            li[i].style.display = "";
-                        } else {
-                            li[i].style.display = "none";
-                        }
+        $(document).ready(function() {
+
+
+            $(".card").draggable({
+                revert: true,
+                helper: "clone"
+            });
+
+            $(".card-column").droppable({
+                accept: ".card",
+                drop: function(event, ui) {
+                    $(this).append(ui.draggable.clone());
+                }
+            });
+
+            function FilterList(txtName, ulName) {
+                // Declare variables
+                var input, filter, ul, li, a, i, txtValue;
+                input = document.getElementById(txtName);
+                filter = input.value.toUpperCase();
+                ul = document.getElementById(ulName);
+                li = ul.getElementsByTagName('li');
+
+                // Loop through all list items, and hide those who don't match the search query
+                for (i = 0; i < li.length; i++) {
+                    a = li[i];
+                    txtValue = a.textContent || a.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        li[i].style.display = "";
+                    } else {
+                        li[i].style.display = "none";
                     }
                 }
+            }
 
-                $("#filteroutstanding").keyup(function () {
-                    FilterList("filteroutstanding", "OutstandingList");
-                });
-
-                $("#filterInProgress").keyup(function () {
-                    FilterList("filterInProgress", "InProgressList");
-                });
+            $("#filteroutstanding").keyup(function() {
+                FilterList("filteroutstanding", "OutstandingList");
             });
+
+            $("#filterInProgress").keyup(function() {
+                FilterList("filterInProgress", "InProgressList");
+            });
+        });
     </script>
     }
