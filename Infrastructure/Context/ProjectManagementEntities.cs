@@ -90,7 +90,7 @@ namespace Infrastructure.Context
             {
                 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
 
-                  optionsBuilder.UseNpgsql("Host=localhost;Database=ProjectManagement_dev;Username=postgres;Password=osama123");
+                  optionsBuilder.UseNpgsql("User ID=oryhuliu;Password=dg3hjPij_qj9Jn5pQ2nPUVab5baJG0kH;Host=kiouni.db.elephantsql.com;Port=5432;Database=oryhuliu;");
 
                // optionsBuilder.UseNpgsql(_configCreator.Get("ConnectionDB:ProjectManagement:Constring"));
             }

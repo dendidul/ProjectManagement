@@ -8,7 +8,7 @@
 
   
 
-@foreach (var mp in ListProject)
+@foreach (var mp in ListProject.DistinctBy(x=>x.ProjectGroupId))
 {
     <li class="menu-item dropdown dropdown-submenu">
         <a href="#" class="dropdown-toggle"
@@ -18,23 +18,18 @@
 
             @{
             
-                 foreach (var cp in ListSubProject.ViewProjectGroupEmployeeModelList.Where(p => p.ProjectGroupId == mp.ProjectGroupId))
-    {
+                    foreach (var cp in ListSubProject.ViewProjectGroupEmployeeModelList.Where(p => p.ProjectGroupId == mp.ProjectGroupId))
+                    {
        
-    <li class='menu-item dropdown dropdown-submenu' value ="@cp.ProjectId"><a href="#">@cp.ProjectName</a></li>
+                        <li class='menu-item dropdown dropdown-submenu' value ="@cp.ProjectId"><a href="#">@cp.ProjectName</a></li>
 
-        if (ListSubProject.ViewProjectGroupEmployeeModelList.Count(p => p.ProjectGroupId == cp.ProjectGroupId) > 0)
-        {
-            @:<li>
-        }
-       
-        if (ListSubProject.ViewProjectGroupEmployeeModelList.Count(p => p.ProjectGroupId == cp.ProjectGroupId) > 0)
-        {
-            @:</li>
-
-        }
+                        if (ListSubProject.ViewProjectGroupEmployeeModelList.Count(p => p.ProjectGroupId == cp.ProjectGroupId) > 0)
+                        {
+                            @:<li>
+                        }      
+                       
       
-    }
+                    }
             
             }
 
