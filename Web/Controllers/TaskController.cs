@@ -4,6 +4,7 @@ using Core.Dto.PMDb;
 using Application.Wrapper.Task;
 using Application.Wrapper.NewsFeed;
 using Application.Wrapper.Attachment;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Web.Controllers
 {
@@ -107,7 +108,7 @@ namespace Web.Controllers
 
         public ActionResult Create()
         {
-
+            ViewBag.ProjectByEmployeeId = new SelectList(_globalController.GetAllProjectEmployeeID(), "ProjectId", "ProjectName");
             _cookieManager.SetCookie("CreateTask",Guid.NewGuid().ToString());
             return View();
         }
@@ -169,6 +170,8 @@ namespace Web.Controllers
             formdata.Createdby = model.TaskData.Createdby;
             formdata.Createddate = model.TaskData.Createddate;
             formdata.Type = model.TaskData.Type;
+
+        
             //formdata.StatusId = model.TaskData.StatusId;
 
 
@@ -246,6 +249,7 @@ namespace Web.Controllers
             _cookieManager.SetCookie("EditTask",Guid.NewGuid().ToString());
             var employeeid = _cookieManager.GetCookie("EmployeeId") != null ? Convert.ToInt32(_cookieManager.GetCookie("EmployeeId")) : 0;
             var data = _taskWrapper.GetDataById(id, employeeid);
+            ViewBag.ProjectByEmployeeId = new SelectList(_globalController.GetAllProjectEmployeeID(), "ProjectId", "ProjectName");
 
             foreach (var j in data.AttachmentList)
             {
@@ -276,6 +280,8 @@ namespace Web.Controllers
         {
             var employeeid = _cookieManager.GetCookie("EmployeeId") != null ? Convert.ToInt32(_cookieManager.GetCookie("EmployeeId")) : 0;
             var data = _taskWrapper.GetDataById(id, employeeid);
+            ViewBag.ProjectByEmployeeId = new SelectList(_globalController.GetAllProjectEmployeeID(), "ProjectId", "ProjectName");
+
             return View(data);
         }
 
@@ -283,6 +289,7 @@ namespace Web.Controllers
         {
             var employeeid = _cookieManager.GetCookie("EmployeeId") != null ? Convert.ToInt32(_cookieManager.GetCookie("EmployeeId")) : 0;
             var data = _taskWrapper.GetDataById(id, employeeid);
+            ViewBag.ProjectByEmployeeId = new SelectList(_globalController.GetAllProjectEmployeeID(), "ProjectId", "ProjectName");
             return View(data);
         }
     }
