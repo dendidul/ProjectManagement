@@ -4,198 +4,191 @@
     Layout = "~/Views/Shared/Template.cshtml";
 }
 
-@*
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card-column">
-                <h3>To Do</h3>
-                <div class="card" draggable="true">Task 1</div>
-                <div class="card" draggable="true">Task 2</div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card-column">
-                <h3>In Progress</h3>
-                <!-- Cards here -->
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card-column">
-                <h3>Done</h3>
-                <!-- Cards here -->
-            </div>
-        </div>
-    </div>
-</div>*@
+<style>
+
+    body {
+        font-family: helvetica, arial;
+        font-size: 12px
+    }
+
+    .scrumboard {
+        margin: 0 auto;
+  
+    }
+
+    h1 {
+        margin-left: 20px;
+        font-size: 2rem;
+    }
+
+    .column {
+      
+        float: left;
+   
+       padding:5px;
+        border-radius: 5px;
+        border: 1px solid #73879C;
+        height: 100vh;
+        overflow-y: scroll;
+    }
+
+  
+
+    .portlet {
+        margin: 0 1em 1em 0;
+        padding: 0.3em;
+    }
+
+    .portlet-header {
+        padding: 0.2em 0.3em;
+        margin-bottom: 0.5em;
+        position: relative;
+    }
+
+    .portlet-toggle {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        margin-top: -8px;
+    }
+
+    .portlet-content {
+        padding: 0.4em;
+    }
+
+    .portlet-placeholder {
+        border: 1px dotted black;
+        margin: 0 1em 1em 0;
+        height: 50px;
+    }
+
+</style>
 
 
 
 <div class="row">
+
+
+
     <div class="col-md-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Planning Board</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Settings 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
+
+
+                <div class="card-column">
+                    <h2>Planning Board</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
 
-
-                <div class="col-md-4 profile_details">
-                    <div class="x_panel">
-                        <div class="x_title">
-
-
-                                <div class="card-column">
-                                    <h2>Outstanding</h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li>
-                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-
-                                    </ul>
-                                    @* <div class="card" draggable="true">Task 1</div>
-                                    <div class="card" draggable="true">Task 2</div>*@
+                <div class="col-md-4">
+                    <div class="column flex">
+                      
+                        <h1>Outstanding</h1>
+                        <hr />
+                        <br />
+                        @{
+                            foreach (var item in Model.Where(x => x.StatusName == "Outstanding"))
+                     
+                           {
+                                <div class="portlet">
+                                    <div class="portlet-header">@item.TaskName</div>
+                                    <div class="portlet-content">@item.Description</div>
                                 </div>
+                            }
+                        }
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="column flex">
+                     
+                        <h1>In Progress</h1>
                         
+                        <hr />
+                        <br />
+                        
+                        @{
+                            foreach (var item in Model.Where(x => x.StatusName == "In Progress"))
+                          
+                           {
+                                <div class="portlet">
+                                    <div class="portlet-header">@item.TaskName</div>
+                                    <div class="portlet-content">@item.Description</div>
+                                </div>
+                            }
+                        }
 
-
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content" style="height:600px">
-                            <br>
-
-                            <input type="text" id="filteroutstanding" placeholder="Search Task .." class="form-control">
-                            <br />
-                            <div style="overflow: scroll; overflow-x: hidden; height:500px">
-                                <ul class="list-group" id="OutstandingList">
-                                    @{
-                                        foreach (var item in Model)
-                                        {
-                                            <li>
-                                                <div class="x_panel">
-
-
-                                                    <div class="" draggable="true">@item.TaskName</div>
-
-                                                </div>
-                                            </li>
-                                        }
-                                    }
-                                </ul>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <div class="col-md-4 profile_details">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>In Progress</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li>
-                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
+                <div class="col-md-4">
+                    <div class="ov"></div>
+                    <div class="column flex">
+                      
+                        <h1>Completed</h1>
+                      
+                        <hr />
+                        <br />
+                         
+                        @{
+                            foreach (var item in Model.Where(x => x.StatusName == "Completed"))
+                            {
+                                <div class="portlet">
+                                    <div class="portlet-header">@item.TaskName</div>
+                                    <div class="portlet-content">@item.Description</div>
+                                </div>
+                            }
+                        }
 
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content" style="height:600px">
-                            <br>
-
-                            <input type="text" id="filterInProgress" placeholder="Search Task .." class="form-control">
-                            <br />
-                            <div style="overflow: scroll; overflow-x: hidden; height:500px">
-                                <ul class="list-group" id="InProgressList">
-                                    @{
-                                        foreach (var item in Model)
-                                        {
-                                            <li>
-                                                <div class="x_panel">
-                                                    @Html.DisplayFor(modelitem => item.TaskName, new { Class = "form-control" })
-                                                </div>
-                                            </li>
-                                        }
-                                    }
-                                </ul>
-
-                            </div>
-                        </div>
                     </div>
                 </div>
-
 
             </div>
         </div>
     </div>
+
+
 </div>
 
 
+
+
+
 @section scripts {
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        $(document).ready(function() {
+       $(function() {
+      $( ".column" ).sortable({
+        connectWith: ".column",
+        handle: ".portlet-header",
+        cancel: ".portlet-toggle",
+        placeholder: "portlet-placeholder ui-corner-all"
+      });
+
+      $( ".portlet" )
+        .addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+        .find( ".portlet-header" )
+          .addClass( "ui-widget-header ui-corner-all" )
 
 
-            $(".card").draggable({
-                revert: true,
-                helper: "clone"
-            });
+      $( ".portlet-toggle" ).click(function() {
+        var icon = $( this );
+        icon.toggleClass( "ui-icon-minusthick ui-icon-plusthick" );
+        icon.closest( ".portlet" ).find( ".portlet-content" ).toggle();
+      });
+    });
 
-            $(".card-column").droppable({
-                accept: ".card",
-                drop: function(event, ui) {
-                    $(this).append(ui.draggable.clone());
-                }
-            });
+</script>
 
-            function FilterList(txtName, ulName) {
-                // Declare variables
-                var input, filter, ul, li, a, i, txtValue;
-                input = document.getElementById(txtName);
-                filter = input.value.toUpperCase();
-                ul = document.getElementById(ulName);
-                li = ul.getElementsByTagName('li');
-
-                // Loop through all list items, and hide those who don't match the search query
-                for (i = 0; i < li.length; i++) {
-                    a = li[i];
-                    txtValue = a.textContent || a.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        li[i].style.display = "";
-                    } else {
-                        li[i].style.display = "none";
-                    }
-                }
-            }
-
-            $("#filteroutstanding").keyup(function() {
-                FilterList("filteroutstanding", "OutstandingList");
-            });
-
-            $("#filterInProgress").keyup(function() {
-                FilterList("filterInProgress", "InProgressList");
-            });
-        });
-    </script>
-    }
+        }
