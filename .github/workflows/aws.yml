@@ -16,7 +16,7 @@ jobs:
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.0' # or the version you're using
+          dotnet-version: '6.0.102' # or the version you're using
 
       - name: Restore dependencies
         run: dotnet restore
@@ -35,9 +35,9 @@ jobs:
           push: false
           tags: project-management:latest
 
-      - name: Deploy to Project Management
-        run: |
-          aws lambda create-function --function-name project-management --code ImageUri=project-management:latest --role <IAM_ROLE_ARN> --handler Web.Controllers.LoginController::Login --timeout 30 --region ap-southeast-1
+      - name: deploy serverless
+        run: dotnet lambda deploy-serverless --template serverless.template
+        working-directory: ./Web
         env:
-          AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
