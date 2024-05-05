@@ -37,7 +37,7 @@ jobs:
 
       - name: Deploy to Project Management
         run: |
-          aws lambda create-function --function-name albapro --code ImageUri=project-management:latest --runtime dotnet6 --role arn:aws:iam::767397959578:role/aws-service-role/sso.amazonaws.com/AWSServiceRoleForSSO --handler Web.Controllers.LoginController::Login --timeout 30 --zip-file fileb://./bin/publish/Web.zip --region ap-southeast-1
+          aws lambda create-function --function-name albapro --code ImageUri=project-management:latest --runtime dotnet6 --role arn:aws:iam::767397959578:role/aws-service-role/sso.amazonaws.com/AWSServiceRoleForSSO --handler Web.Controllers.LoginController::Login --timeout 30 --zip-file fileb://publish/Web.zip --region ap-southeast-1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
