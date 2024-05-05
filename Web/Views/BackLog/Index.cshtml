@@ -1,0 +1,285 @@
+﻿@model IEnumerable<Core.Dto.PMDb.TaskModels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Product Backlog (Make sure you have chosen a Project)</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @*<p>Simple table with project listing with progress and editing options</p>*@
+                <a href="/BackLog/Create/" class="btn btn-primary">Input Product Backlog</a>
+                @*<a href="/Task/Create/" class="btn btn-info">Upload File</a>*@
+                <button type="button" id="uploadfile" class="btn btn-warning">Upload File</button>
+                <br />
+                <!-- start project list -->
+                <table id="datatable" class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th>Task Name</th>
+                            <th>Project</th>
+                            <th>Task Group</th>
+                            <th>Type</th>
+                            <th>Assign To</th>
+                            <th>Severity</th>
+                           
+                            <th>Status</th>
+                           
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var i in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(model => i.TaskName)</td>
+                                    <td>@Html.DisplayFor(model => i.ProjectName)</td>
+                                    <td>@Html.DisplayFor(model => i.TaskGroup)</td>
+                                    <td>@Html.DisplayFor(model => i.TypeName)</td>
+                                    <td>@Html.DisplayFor(model => i.AssignedTo)</td>
+                                    <td>@Html.DisplayFor(model => i.Severity)</td>
+                                    
+                                    <td><button type="button" class="btn btn-success btn-xs">@Html.DisplayFor(model => i.StatusName)</button></td>
+                                    
+                                    <td>
+                                        <a href="/Backlog/Edit/@i.Id" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                        <a href="/Backlog/Details/@i.Id" class="btn btn-info btn-xs"><i class="fa fa-folder"></i>View Details </a>
+                                        <a href="/Backlog/Delete/@i.Id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                <!-- end project list -->
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+<div id="UploadModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel2">Upload File</h4>
+            </div>
+            <div class="modal-body">
+                <div id="testmodal2" style="padding: 5px 20px;">
+                    @*<form id="antoform2" class="form-horizontal calender" role="form">*@
+@using (Html.BeginForm("Create", "Image", FormMethod.Post, new { Class = "FormUpload", enctype = "multipart/form-data" }))
+            {
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Upload File</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" id="Upload_File" name="Upload_File">
+                                @*<label id="title"></label>*@
+                            </div>
+                           
+                                                
+                </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Project</label>
+                            <div class="col-sm-9">
+                                <select id="project" class="form-control" name="project">
+                                    @*<option value="">Please Choose</option>*@
+                                </select>
+                                @*<label id="title"></label>*@
+                            </div>
+                        </div>
+                      
+}
+                @*</form>*@
+            </div>
+            </div>
+            <div class="modal-footer">
+                <a href="~/Content/Template/Upload_Backlog_Template.xlsx" class="btn btn-primary">Download template</a>
+                @* <button type="button" class="btn btn-default antoclose2" data-dismiss="modal"></button>*@
+                <button type="button" class="btn btn-success" id="btnuploadfile">Upload File</button>
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
+
+            </div>
+
+            <div class="progress progress-small m-b-small">
+                <div class="progress-bar progress-bar-primary" data-toggle="tooltip" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $('#datatable').dataTable();
+
+                $("#uploadfile").on('click', function (ev) {
+                    $("#UploadModal").modal('show');
+
+                });
+
+                $('#btnuploadfile').on('click', function () {
+                    var url = "@Url.Action("UploadBacklogFromExcel", "Global")";
+                    var projectid = $('#project').val();
+                    if (projectid == "")
+                    {
+                        alert('Please Choose ProjectId');
+                        return false;
+                    }
+
+                    var formData = new FormData($('.FormUpload')[0]);
+                    $.ajax({
+                        url: url,  //Server script to process data
+                        type: 'POST',
+                        xhr: function () {  // Custom XMLHttpRequest
+                            var myXhr = $.ajaxSettings.xhr();
+                            if (myXhr.upload) { // Check if upload property exists
+                                myXhr.upload.addEventListener('progress',
+                                progressHandlingFunction, false); // For handling the progress of the upload
+                            }
+                            return myXhr;
+                        },
+                        data: formData,
+                        //Options to tell jQuery not to process data or worry about content-type.
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function () {
+                            $('.progress').show();
+                        },
+                        success: function (data) {
+                            if(data =="Success")
+                            {
+                                alert('Success');
+                                location.reload();
+
+                            }
+                            else
+                            {
+                                alert('Error in Upload File');
+                            }
+                            @*$('#uploadTimesheet').modal('hide');
+                            $(".progress").hide();
+                            $('.progress-bar').width('0%');
+                            console.log(data);
+                            $.alert({
+                                title: 'Info',
+                                content: '<strong>Upload Successfull</strong>',
+                                confirmButton: 'Ok',
+                                confirmButtonClass: 'btn-primary',
+                                icon: 'fa fa-check-square',
+                                animation: 'zoom',
+                                confirm: function () {
+                                    @*var url = "@Url.Action("FormPreview", "Timesheets")";
+                                    $.get(url,data, function (returns) {*@
+                                        //console.log(data);
+                       
+                        },
+                        error: function () {
+                            $.alert({
+                                title: 'Alert',
+                                content: '<strong>Upload Failure</strong>',
+                                confirmButton: 'Okay',
+                                confirmButtonClass: 'btn-primary',
+                                icon: 'fa fa-info',
+                                animation: 'zoom',
+                                confirm: function () {
+                                    $(".progress").hide();
+                                    $('.progress-bar').width('0%');
+                                }
+                            });
+                        }
+                    });
+
+                });
+
+                function progressHandlingFunction(e) {
+                    if (e.lengthComputable) {
+                        var percentComplete = (e.total / e.loaded) * 100;
+                        var percentVal = percentComplete + '%';
+                        $('.progress-bar').width(percentVal);
+
+                        //$('progress').attr({ value: e.loaded, max: e.total });
+                    }
+                }
+
+               
+                function GetProjectEmployeeID()
+                {
+
+                    $.ajax({
+                        url: "@Url.Action("GetProjectByEmployeeId", "Global")",
+                        type: "GET",
+                    //data: { Name: row, currency: $("#FormExpenseClaimRequestModel_ClaimCurrency").val() },
+                    dataType: "json",
+                    success: function (data) {
+                        //$.each(data, function (i, val) {
+                        //alert(data.length);
+                        if (data.length < 1) {
+                            //alert('ga ada cok');
+                            $("#project").empty();
+                            //$("#ProjectId").append($("<option></option>").val('').html(""));
+                            $("#project").append("<option value=''>== Please Choose ==</option>");
+                        }
+                        else {
+                            $("#project").empty();
+                            $("#project").append("<option value=''>== Please Choose ==</option>");
+                            //$("#ProjectId").append($("<option></option>").val('').html(""));
+                            for (var i = 0; i < data.length; i++) {
+                                //alert(data[i].BankName);
+                                var optionhtml = '<option value="' +
+                                data[i].ProjectId + '">' + data[i].ProjectName + '</option>';
+                                $("#project").append(optionhtml);
+                            }
+                        }
+
+                    },
+                    error: function () {
+                        alert("Please check your connection or contact support system!");
+
+                        //$.alert({
+                        //    title: 'Info',
+                        //    content: '<h5><b>Please check your connection or contact support system</b></h5>',
+                        //    confirm: function () {
+
+                        //    }
+                        //});
+                    }
+                });
+                }
+                GetProjectEmployeeID();
+               
+            });
+    </script>
+}

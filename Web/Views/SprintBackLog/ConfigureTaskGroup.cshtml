@@ -1,0 +1,162 @@
+﻿@model Core.Dto.PMDb.BackLogModel
+
+@{
+    ViewBag.Title = "Create Roles";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+@*<h2>Create</h2>*@
+
+@using (Html.BeginForm("ConfigureTaskGroup", "SprintBackLog", FormMethod.Post, new { Class = "", Id = "formAddRoles" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Configure Sprint BackLog</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+
+                    </ul>
+
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="form-horizontal form-label-left input_mask">
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Task Group Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.TaskGroupModel.Taskgroupname, new { Class = "form-control col-md-7 col-xs-12",disabled = "true" })
+                            @Html.HiddenFor(model => model.TaskGroupModel.Id)
+                            @Html.HiddenFor(model => model.TaskGroupModel.Projectid)
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+                    </div>
+
+
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Description
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextAreaFor(model => model.TaskGroupModel.Description, new { Class = "form-control col-md-7 col-xs-12", disabled = "true" })
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Project
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskGroupModel.Projectid, ViewBag.Project as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+                        </div>
+                    </div>
+
+                    <br />
+                    <hr />
+                    <div class="item form-group">
+
+                        <table class="table" id="ListBackLog">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="select-all" /></th>
+                                    <th>Task Name</th>
+                                    <th>Description</th>
+                                    <th>TaskGroup</th>
+                                    <th>ProjectName</th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach(var row in Model.ListTask)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (row.TaskGroupId == Model.TaskGroupModel.Id)
+                                                {
+                                                <input type="checkbox" checked name="SelectedTask" class="rowchk" value="@row.Id"/>
+                                                }
+
+                                                else
+                                                {
+                                                    <input type="checkbox" name="SelectedTask" class="rowchk" value="@row.Id" />
+                                                }  
+                                               
+                                            
+                                            </td>
+                                            <td>@Html.DisplayFor(model => row.TaskName)</td>
+                                            <td>@Html.DisplayFor(model => row.Description)</td>
+                                            <td>@Html.DisplayFor(model => row.TaskGroup)</td>
+                                            <td>@Html.DisplayFor(model => row.ProjectName)</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                        <div class="item form-group">
+                            <div class="control-label col-md-5 col-sm-3 col-xs-12">
+                                <input type="submit" class="btn btn-success" value="Submit" />
+                                @*<button type="button" class="btn btn-warning">Back To List</button>*@
+                                <a href="/SprintBackLog/Index/" class="btn btn-warning">Back To List</a>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            </div>
+
+
+                        </div>
+
+                    </div>
+            </div>
+        </div>
+    </div>
+}
+    
+   @section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var table = $('#ListBackLog').DataTable({
+                fixedHeader: true, "aaSorting": [],
+                //responsive:true
+                paging: false,
+                "scrollY": 350
+                              , "scrollX": true
+                              , "columnDefs": [
+                         { "width": "20px", "targets": 0 },
+                            { "width": "300px", "targets": 1 },
+                              { "width": "280px", "targets": 2 },
+                                { "width": "100px", "targets": 3 },
+                                     //{ "width": "150px", "targets": 4 }
+                          //           ,
+                          //            { "width": "150px", "targets": 5 },
+                          //             { "width": "150px", "targets": 6 },
+                          //{ "width": "75px", "targets": 7 }
+                              ]
+            });
+
+            $('#select-all').on('change', function () {
+               
+                if (this.checked) {
+                    $(".rowchk").prop('checked', true);
+                }
+                else {
+                    $(".rowchk").prop('checked', false);
+                }
+            });
+        });
+     </script>
+     }

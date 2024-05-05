@@ -1,0 +1,284 @@
+﻿@model Core.Dto.PMDb.FormTaskModel
+
+@{
+    ViewBag.Title = "Create Projects";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+@*<h2>Create</h2>*@
+
+@using (Html.BeginForm("Create", "Task", FormMethod.Post, new { Class = "", Id = "formAddRoles" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Details Task</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+
+                    </ul>
+
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="form-horizontal form-label-left input_mask">
+                    <button id="BtnActivity" type="button" class="btn btn-info">Activity Log</button>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Task Group <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Taskgroupid, ViewBag.TaskGroup as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Task Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.TaskData.Taskname, new { Class = "form-control col-md-7 col-xs-12", disabled = "true" })
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Project Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Projectid, ViewBag.ProjectByEmployeeId as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Start Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.TaskData.Startdate, "{0:dd-MMM-yyyy}", new { Class = "form-control col-md-7 col-xs-12 datepicker", disabled = "true" })
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            End Date <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.TaskData.Duedate, "{0:dd-MMM-yyyy}", new { Class = "form-control col-md-7 col-xs-12 datepicker", disabled = "true" })
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Severity <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Severityid, ViewBag.Severity as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Assigned To <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Assignto, ViewBag.EmployeeByProject as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Status
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Statusid, ViewBag.AllStatus as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Description
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextAreaFor(model => model.TaskData.Descripition, new { Class = "form-control col-md-7 col-xs-12", disabled = "true" })
+
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Reviewed By
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.TaskData.Reviewby, ViewBag.EmployeeByProject as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Review Result
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextAreaFor(model => model.TaskData.Result, new { Class = "form-control col-md-7 col-xs-12", disabled = "true" })
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Upload File
+                        </label>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+
+                                @{
+    foreach (var i in Model.AttachmentList)
+    {
+        if (i.Filetype == ".pdf")
+        {
+                <div class="col-md-55">
+                    <div class="thumbnail" style="width:100px;height:110px">
+                        <div class="image view view-first">
+                            <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/pdf.png" alt="image" /></a>
+
+                        </div>
+                        <div class="caption">
+
+                        </div>
+                    </div>
+                </div>
+        }
+
+        else if (i.Filetype == ".xlsx" || i.Filetype == ".xls")
+        {
+                <div class="col-md-55">
+                    <div class="thumbnail" style="width:100px;height:110px">
+                        <div class="image view view-first">
+                            <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/xls-icon-3379.png" alt="image" /></a>
+
+                        </div>
+                        <div class="caption">
+
+                        </div>
+                    </div>
+                </div>
+        }
+        else if (i.Filetype == ".doc" || i.Filetype == ".docx")
+        {
+                <div class="col-md-55">
+                    <div class="thumbnail" style="width:100px;height:110px">
+                        <div class="image view view-first">
+                            <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/doc.png" alt="image" /></a>
+
+                        </div>
+                        <div class="caption">
+
+                        </div>
+                    </div>
+                </div>
+        }
+
+        else
+        {
+
+
+
+
+                <div class="col-md-55">
+                    <div class="thumbnail" style="width:100px;height:110px">
+                        <div class="image view view-first">
+                            <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="@i.Url" alt="image" /></a>
+
+                        </div>
+                        <div class="caption">
+
+                        </div>
+                    </div>
+                </div>
+        }
+    }
+                                }
+                            </div>
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="item form-group">
+                    <div class="control-label col-md-5 col-sm-3 col-xs-12">
+                        @*<button type="submit" class="btn btn-success">Submit</button>*@
+                        @*<input type="submit" class="btn btn-success" value="Submit" />*@
+                        @*<button type="button" class="btn btn-warning">Back To List</button>*@
+                        <a href="/Task/Index/" class="btn btn-warning">Back To List</a>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="ModalActivity" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        @Html.Partial("~/Views/PartialView/DayActivityDetails.cshtml")
+
+
+
+
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("#BtnActivity").on('click', function (ev) {
+
+                $("#ModalActivity").modal('show');
+            });
+        });
+        //$('#TaskData_StartDate').daterangepicker({
+        //        singleDatePicker: true,
+        //        calender_style: "picker_4"
+        //    }, function (start, end, label) {
+        //        console.log(start.toISOString(), end.toISOString(), label);
+        //    });
+
+        //$('#TaskData_DueDate').daterangepicker({
+        //        singleDatePicker: true,
+        //        calender_style: "picker_4"
+        //    }, function (start, end, label) {
+        //        console.log(start.toISOString(), end.toISOString(), label);
+        //    });
+
+    </script>
+}

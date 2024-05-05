@@ -1,0 +1,101 @@
+﻿@model  Core.Dto.PMDb.AuthorityMenuModel
+
+@{
+                /**/
+
+                ViewBag.Title = "EditRoleMenu";
+                Layout = "~/Views/Shared/Template.cshtml";
+}
+
+
+<style>
+    .table th, .table td {
+        border-top: none !important;
+    }
+</style>
+
+
+@using (Html.BeginForm("AuthorityAccessMenu", "Menu", FormMethod.Post, new { Id = "formRoleMenu form-horizontal" }))   
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Authority Access Menu</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+
+                    </ul>
+
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                @*<a href="/Roles/Create/" class="btn btn-primary">Create Role</a>*@
+                @*<button class="btn btn-primary">Create Project</button>*@
+                <div class="x_content">
+                    <table class="table" style="background-color:white">
+                        <tr>
+                            <td>
+                                <div class="editor-label">
+                                    Role
+                                </div>
+                            </td>
+                            <td>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Role.Rolesname, null, new { Class = "form-control", style = "width:200px", Readonly = true })
+                                    @Html.HiddenFor(model => model.Role.Id, new { Class = "form-control", style = "width:200px" })
+                                    @Html.ValidationMessageFor(model => model.Role.Id)
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                    <ul id="browser" class="easyui-tree editor-field table table-striped table-advance table-hover">
+                        @foreach (var item in Model.MenuList.Where(x => x.ParentId == 0 && x.Id != 0))
+                        {
+                            <li class="sub-menu">
+                                @if (Model.SelectedMenuList.Contains(item))
+                                {
+                                    <span class="easyui-tree"><input type="checkbox" id="tt" class="easyui-tree" name="SelectedMenu" checked="checked" value="@item.Id">@item.Menuname</span>
+                                }
+                                else
+                                {
+                                    <span class="easyui-tree"><input type="checkbox" id="tt" class="easyui-tree" name="SelectedMenu" value="@item.Id">@item.Menuname</span>
+                                }
+                                <ul class="sub">
+                                    @foreach (var child in Model.MenuList.Where(x => x.ParentId == item.Id))
+                                    {
+                                        <li>
+                                            @if (Model.SelectedMenuList.Contains(child))
+                                            {
+                                                <span class="easyui-tree"><input type="checkbox" class="easyui-tree" name="SelectedChildMenu" checked="checked" value="@child.Id">@child.Menuname</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="easyui-tree"><input type="checkbox" class="easyui-tree" name="SelectedChildMenu" value="@child.Id">@child.Menuname</span>
+                                            }
+                                        </li>
+                                    }
+
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    <div>
+                        <button type="submit" value="Create" id="btnSubmit" class="btn btn-success">Update</button>
+                        <a href="/Menu/ListRoles/" class="btn btn-warning">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

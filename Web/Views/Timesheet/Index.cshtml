@@ -1,0 +1,388 @@
+﻿@model Core.Dto.PMDb.FormTimesheetEmployeeModel
+
+@{
+    ViewBag.Title = "Timesheet Employee";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Download Timesheet Employee</h2>
+                       
+                        <div class="clearfix"></div>
+
+                       
+
+                    </div>
+
+                    <div class="form-horizontal form-label-left">
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                Begin Date <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.BeginDate, new { Class = "form-control col-md-7 col-xs-12 datepicker", style = "width:200px" })
+                                <label style="color:red" id="vdlbegindate"> Please Fill Begin Date</label>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                End Date <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(model => model.EndDate, new { Class = "form-control col-md-7 col-xs-12 datepicker", style = "width:200px" })
+                                <label style="color:red" id="vdlenddate"> Please Fill End Date</label>
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                                Project <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @*@Html.TextBoxFor(model => model.ProjectId, new { Class = "form-control col-md-7 col-xs-12", style = "width:200px" })*@
+                                @Html.DropDownListFor(model => model.ProjectId, ViewBag.Project as IEnumerable<SelectListItem>, "", new { Class = "form-control col-md-7 col-xs-12" })
+                                <label style="color:red" id="vdlproject"> Please select Project</label>
+
+
+
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            <div class="control-label col-md-5 col-sm-3 col-xs-12">
+                                @*<a href="@Url.Action("ExportToExcel", "EmployeeDetail", new { })" title="ExportToExcel">
+                                        <button id="ExportExcel" type="button" class="btn btn-primary" value="Back">Export Excel</button>
+                                </a>*@
+                                <button type="button" id="BtnDownload" class="btn btn-success">Download Timesheet</button>
+                              
+                                @*<button type="button" class="btn btn-warning">Back To List</button>*@
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="clear-fix"></div>
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Timesheet Employee</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+
+
+
+                        <div class="x_content">
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+ 
+
+
+
+
+
+<div id="CalenderModalDetails" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel2">Info</h4>
+            </div>
+            <div class="modal-body">
+                <div id="testmodal2" style="padding: 5px 20px;">
+                    <form id="antoform2" class="form-horizontal calender" role="form">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Title</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="Title" disabled>
+                                @*<label id="title"></label>*@
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Description</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" style="height:55px;" id="Description" disabled></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Project Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="Project" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">PIC</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="PIC" disabled>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
+               
+            </div>
+        </div>
+    </div>
+    </div>
+
+   
+    @section scripts {
+        @*<script src="~/Content/jquery-ui-1.9.2.custom.min.js"></script>*@
+        @*<script src="~/Content/jquery.confirm.js"></script>*@
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+
+                function HideValidation()
+                {
+                    $('#vdlbegindate').hide();
+                    $('#vdlenddate').hide();
+                    $('#vdlproject').hide();
+                }
+
+                HideValidation();
+
+                $("#BtnDownload").on('click', function (ev) {
+                    ev.preventDefault();
+                    var ProjectId = $("#ProjectId").val();
+                    var StartDate = $("#BeginDate").val();
+                    var EndDate = $("#EndDate").val();
+
+                    if (ProjectId == "" || StartDate == "" || EndDate == "")
+                    {
+                        if (StartDate == "") {
+                            $('#vdlbegindate').show();
+
+
+                        }
+                        if (StartDate != "") {
+                            $('#vdlbegindate').hide();
+
+
+                        }
+
+                        if (EndDate == "") {
+
+                            $('#vdlenddate').show();
+
+
+                        }
+                        if (EndDate != "") {
+
+                            $('#vdlenddate').hide();
+
+
+                        }
+                        //$('#vdlproject').show();
+                        if (ProjectId == "") {
+
+                            $('#vdlproject').show();
+
+
+                        }
+                        if (ProjectId != "") {
+
+                            $('#vdlproject').hide();
+
+
+                        }
+                       
+
+
+                    }
+                   
+
+                    else
+                    {
+                        HideValidation();
+                        window.open('../Timesheet/DownloadTimesheet?Projectid=' + ProjectId + '&Startdate=' + StartDate + '&Enddate=' + EndDate, '_blank');
+                    }
+
+                    
+                });
+                
+                //$('#BeginDate').daterangepicker({
+                //    singleDatePicker: true,
+                //    calender_style: "picker_4"
+                //}, function (start, end, label) {
+                //    console.log(start.toISOString(), end.toISOString(), label);
+                //});
+
+                //$('#EndDate').daterangepicker({
+                //    singleDatePicker: true,
+                //    calender_style: "picker_4"
+                //}, function (start, end, label) {
+                //    console.log(start.toISOString(), end.toISOString(), label);
+                //});
+            });
+            $(window).load(function () {
+
+                $('#calendar').fullCalendar({
+                    //theme: true,
+                    lang: 'en-NZ',
+                    selectable: true,
+                    selectHelper: true,
+                    header: {
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+
+                    editable: false,
+                    events: "/Timesheet/getevents/",
+                    eventClick: function (calEvent, jsEvent, view) {
+                        //$.alert({
+                        //    title: 'Event',
+                        //    content: '<strong>Event : ' + calEvent.title + '</br>  Description : ' + calEvent.Description + '</br>  Project : ' + calEvent.ProjectName + '</strong>',
+                        //    confirmButton: 'Okay',
+                        //    confirmButtonClass: 'btn-primary',
+                        //    icon: 'fa fa-info',
+                        //    animation: 'zoom',
+                        //    confirm: function () {
+                        //    }
+                        //});
+                        //alert('<strong>Event : ' + calEvent.title + '</br>  Description : ' + calEvent.Description + '</br>  Project : ' + calEvent.ProjectName + '</strong>');
+
+                        $("#CalenderModalDetails").modal('show');
+                        $("#Title").val(calEvent.title);
+                        $("#Description").val(calEvent.title);
+                        $("#Project").val(calEvent.ProjectName);
+                        $("#PIC").val(calEvent.EmployeeName);
+
+                        //$.alert({
+                        //    title: 'Event',
+                        //    content: '<strong>Event : ' + calEvent.title + '</br>  Description : ' + calEvent.Description + '</br>  Project : ' + calEvent.ProjectName + '</strong>',
+                        //    confirm: function () {
+
+                        //    }
+                        //});
+
+
+                        $(this).css('border-color', 'red');
+                    }
+
+                })
+
+            });
+            //var date = new Date(),
+            //    d = date.getDate(),
+            //    m = date.getMonth(),
+            //    y = date.getFullYear(),
+            //    started,
+            //    categoryClass;
+
+            //var calendar = $('#calendar').fullCalendar({
+            //    header: {
+            //        left: 'prev,next today',
+            //        center: 'title',
+            //        right: 'month,agendaWeek,agendaDay'
+            //    },
+            //    selectable: true,
+            //    selectHelper: true,
+            //    select: function (start, end, allDay) {
+            //        $('#fc_create').click();
+
+            //        started = start;
+            //        ended = end;
+
+            //        $(".antosubmit").on("click", function () {
+            //            var title = $("#title").val();
+            //            if (end) {
+            //                ended = end;
+            //            }
+
+            //            categoryClass = $("#event_type").val();
+
+            //            if (title) {
+            //                calendar.fullCalendar('renderEvent', {
+            //                    title: title,
+            //                    start: started,
+            //                    end: end,
+            //                    allDay: allDay
+            //                },
+            //                  true // make the event "stick"
+            //                );
+            //            }
+
+            //            $('#title').val('');
+
+            //            calendar.fullCalendar('unselect');
+
+            //            $('.antoclose').click();
+
+            //            return false;
+            //        });
+            //    },
+            //    eventClick: function (calEvent, jsEvent, view) {
+            //        $('#fc_edit').click();
+            //        $('#title2').val(calEvent.title);
+
+            //        categoryClass = $("#event_type").val();
+
+            //        $(".antosubmit2").on("click", function () {
+            //            calEvent.title = $("#title2").val();
+
+            //            calendar.fullCalendar('updateEvent', calEvent);
+            //            $('.antoclose2').click();
+            //        });
+
+            //        calendar.fullCalendar('unselect');
+            //    },
+            //    editable: true,
+            //    events: [{
+            //        title: 'All Day Event',
+            //        start: new Date(y, m, 1)
+            //    }, {
+            //        title: 'Long Event',
+            //        start: new Date(y, m, d - 5),
+            //        end: new Date(y, m, d - 2)
+            //    }, {
+            //        title: 'Meeting',
+            //        start: new Date(y, m, d, 10, 30),
+            //        allDay: false
+            //    }, {
+            //        title: 'Lunch',
+            //        start: new Date(y, m, d + 14, 12, 0),
+            //        end: new Date(y, m, d, 14, 0),
+            //        allDay: false
+            //    }, {
+            //        title: 'Birthday Party',
+            //        start: new Date(y, m, d + 1, 19, 0),
+            //        end: new Date(y, m, d + 1, 22, 30),
+            //        allDay: false
+            //    }, {
+            //        title: 'Click for Google',
+            //        start: new Date(y, m, 28),
+            //        end: new Date(y, m, 29),
+            //        url: 'http://google.com/'
+            //    }]
+            //});
+            //});
+            //$(document).ready(function () {
+            //    $('#datatable').dataTable();
+            //});
+        </script>
+    }
+

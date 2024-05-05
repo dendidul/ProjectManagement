@@ -1,0 +1,193 @@
+﻿@model Core.Dto.PMDb.DocumentModel
+
+@{
+    ViewBag.Title = "CreatePublicDocument";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+@using (Html.BeginForm("CreatePublicDocument", "Document", FormMethod.Post, new { Class = "formAddRoles", Id = "formAddRoles", enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Details Document</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+
+                    </ul>
+
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="form-horizontal form-label-left input_mask">
+
+
+
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Document Name <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(model => model.DocumentName, new { Class = "form-control col-md-7 col-xs-12", disabled = "true" })
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Decription
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextAreaFor(model => model.Description, new { Class = "form-control col-md-7 col-xs-12", disabled = "true" })
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+                    </div>
+
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Project
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.DropDownListFor(model => model.ProjectId, ViewBag.Project as IEnumerable<SelectListItem>, "", new { Class = "form-control  col-md-7 col-xs-12", disabled = "true" })
+
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
+                            Upload File
+                        </label>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+
+                                @{
+    foreach (var i in Model.ListAttachmentFiles)
+    {
+        if (i.Filetype == ".pdf")
+        {
+            <div class="col-md-55">
+                <div class="thumbnail" style="width:100px;height:110px">
+                    <div class="image view view-first">
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/pdf.png" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        else if (i.Filetype == ".xlsx" || i.Filetype == ".xls")
+        {
+            <div class="col-md-55">
+                <div class="thumbnail" style="width:100px;height:110px">
+                    <div class="image view view-first">
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/xls-icon-3379.png" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+
+                    </div>
+                </div>
+            </div>
+        }
+        else if (i.Filetype == ".doc" || i.Filetype == ".docx")
+        {
+            <div class="col-md-55">
+                <div class="thumbnail" style="width:100px;height:110px">
+                    <div class="image view view-first">
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="~/Images/doc.png" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+
+                    </div>
+                </div>
+            </div>
+        }
+
+        else
+        {
+
+
+
+
+            <div class="col-md-55">
+                <div class="thumbnail" style="width:100px;height:110px">
+                    <div class="image view view-first">
+                        <a href="@i.Url" target="_blank"><img style="width: 100px; height: 100px;" src="@i.Url" alt="image" /></a>
+
+                    </div>
+                    <div class="caption">
+
+                    </div>
+                </div>
+            </div>
+        }
+    }
+                                }
+                            </div>
+                            @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
+                        </div>
+
+                    </div>
+
+                    <div class="item form-group">
+                        <div class="control-label col-md-5 col-sm-3 col-xs-12">
+                            @*<input type="submit" class="btn btn-success" value="Submit" />*@
+                            @*<button type="button" class="btn btn-warning">Back To List</button>*@
+                            <a href="/Document/IndexByProject/" class="btn btn-warning">Back To List</a>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //UploadData();
+            //    $("#file-0b").fileinput();
+
+            //    $("#file-1").fileinput({
+            //        uploadUrl: '#', // you must set a valid URL here else you will get an error
+            //        allowedFileExtensions: ['jpg', 'png', 'gif'],
+            //        overwriteInitial: false,
+            //        maxFileSize: 1000,
+            //        maxFilesNum: 10,
+            //        //allowedFileTypes: ['image', 'video', 'flash'],
+            //        slugCallback: function (filename) {
+            //            return filename.replace('(', '_').replace(']', '_');
+            //        }
+            //    });
+            //});
+
+
+
+        });
+
+        //$(function () {
+        //    //UploadData();
+        //    // access Dropzone here
+        //});
+
+    </script>
+}

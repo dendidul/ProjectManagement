@@ -1,0 +1,81 @@
+﻿@{
+    List<Core.Dto.PMDb.RolesMenuViewModel> menuList = ViewBag.Menu;
+    List<Core.Dto.PMDb.RolesMenuViewModel> menuList2 = ViewBag.Menu;
+}
+
+
+
+@foreach (var mp in menuList.Where(p => p.MenuModel.ParentId == 0).OrderBy(p => p.MenuModel.Sequence))
+{
+    
+    <li>
+       
+        <a href="@mp.MenuModel.Link">
+            <i class="fa fa-home"></i> 
+            @mp.MenuModel.Menuname <span class="fa fa-chevron-down"></span>
+        </a>
+        <ul class="nav child_menu">
+           
+
+           @{
+               foreach (var cp in menuList2.Where(p => p.MenuModel.ParentId == mp.MenuModel.Id).OrderBy(p => p.MenuModel.Sequence))
+             {
+       
+                        <li><a href="@cp.MenuModel.Link">@cp.MenuModel.Menuname</a></li>
+
+                    if (menuList2.Count(p => p.MenuModel.ParentId == cp.MenuModel.Id) > 0)
+                    {
+                        @:<li>
+                    }
+       
+                    if (menuList2.Count(p => p.MenuModel.Id == cp.MenuModel.Id) > 0)
+                    {
+                        @:</li>
+
+
+
+
+                    }
+       
+                }
+
+           }
+
+
+
+        </ul>
+
+    </li>
+}
+
+
+
+
+@*@functions {
+    
+    private void RenderMenuItem(List<Core.Dto.PMDb.RolesMenuViewModel> menuList, Core.Dto.PMDb.RolesMenuViewModel mi)
+{
+    foreach (var cp in menuList.Where(p => p.MenuModel.ParentId == mi.MenuModel.Id).OrderBy(p => p.MenuModel.Sequence))
+    {
+       
+            <li><a href="@cp.MenuModel.Link">@cp.MenuModel.Menuname</a></li>
+
+        if (menuList.Count(p => p.MenuModel.ParentId == cp.MenuModel.Id) > 0)
+        {
+            @:<li>
+        }
+       
+        if (menuList.Count(p => p.MenuModel.Id == cp.MenuModel.Id) > 0)
+        {
+            @:</li>
+
+
+
+
+        }
+       
+    }
+}
+
+}*@
+
