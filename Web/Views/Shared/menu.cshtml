@@ -4,78 +4,47 @@
 }
 
 
-
-@foreach (var mp in menuList.Where(p => p.MenuModel.ParentId == 0).OrderBy(p => p.MenuModel.Sequence))
-{
-    
-    <li>
-       
-        <a href="@mp.MenuModel.Link">
-            <i class="fa fa-home"></i> 
-            @mp.MenuModel.Menuname <span class="fa fa-chevron-down"></span>
-        </a>
-        <ul class="nav child_menu">
-           
-
-           @{
-               foreach (var cp in menuList2.Where(p => p.MenuModel.ParentId == mp.MenuModel.Id).OrderBy(p => p.MenuModel.Sequence))
-             {
-       
-                        <li><a href="@cp.MenuModel.Link">@cp.MenuModel.Menuname</a></li>
-
-                    if (menuList2.Count(p => p.MenuModel.ParentId == cp.MenuModel.Id) > 0)
-                    {
-                        @:<li>
-                    }
-       
-                    if (menuList2.Count(p => p.MenuModel.Id == cp.MenuModel.Id) > 0)
-                    {
-                        @:</li>
-
-
-
-
-                    }
-       
-                }
-
-           }
-
-
-
-        </ul>
-
-    </li>
-}
-
-
-
-
-@*@functions {
-    
-    private void RenderMenuItem(List<Core.Dto.PMDb.RolesMenuViewModel> menuList, Core.Dto.PMDb.RolesMenuViewModel mi)
-{
-    foreach (var cp in menuList.Where(p => p.MenuModel.ParentId == mi.MenuModel.Id).OrderBy(p => p.MenuModel.Sequence))
+<!-- Layouts -->
+@{
+    foreach (var mp in menuList.Where(p => p.MenuModel.ParentId == 0).OrderBy(p => p.MenuModel.Sequence))
     {
-       
-            <li><a href="@cp.MenuModel.Link">@cp.MenuModel.Menuname</a></li>
 
-        if (menuList.Count(p => p.MenuModel.ParentId == cp.MenuModel.Id) > 0)
+        if (menuList2.Where(p => p.MenuModel.ParentId == mp.MenuModel.Id).Any())
         {
-            @:<li>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Layouts">@mp.MenuModel.Menuname</div>
+                </a>
+                <ul class="menu-sub">
+                    @foreach (var cp in menuList2.Where(p => p.MenuModel.ParentId == mp.MenuModel.Id).OrderBy(p => p.MenuModel.Sequence))
+                    {
+                        <li class="menu-item">
+                            <a href="@cp.MenuModel.Link" class="menu-link">
+                                <div data-i18n="Without menu">@cp.MenuModel.Menuname</div>
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </li>
         }
-       
-        if (menuList.Count(p => p.MenuModel.Id == cp.MenuModel.Id) > 0)
+
+        else
         {
-            @:</li>
-
-
-
-
+            <li class="menu-item">
+                <a href="@mp.MenuModel.Link" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Form Elements">@mp.MenuModel.Menuname</div>
+                </a>
+            </li>
         }
-       
+
+
+
+
+
+
     }
 }
-
-}*@
 

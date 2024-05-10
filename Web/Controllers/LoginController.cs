@@ -43,6 +43,17 @@ namespace Web.Controllers
             return View();
         }
 
+        public IActionResult Test()
+        {
+            _cookieManager.RemoveCookie("EmployeeId");
+            _cookieManager.RemoveCookie("ProjectID");
+            _cookieManager.RemoveCookie("ImageProfile");
+            _cookieManager.RemoveCookie("Role_ID");
+            _cookieManager.RemoveCookie("Employee");
+
+            return View();
+        }
+
 
         [HttpPost]
 
@@ -52,9 +63,11 @@ namespace Web.Controllers
             
 
             var data = _usersWrapper.CheckValidateUser(model.Username, model.Password);
+            string Message = "";
+
             if (data == true)
             {
-
+                Message = "Valid";
                 var getRolesId = _usersWrapper.GetUser(model.Username, model.Password) != null ? _usersWrapper.GetUser(model.Username, model.Password).Rolesid : 0;
                 if (getRolesId == 1)
                 {
@@ -78,7 +91,8 @@ namespace Web.Controllers
 
 
                     _cookieManager.SetCookie("EmployeeId", getEmployeeId);
-                    _cookieManager.SetCookie("ProjectID", "0");
+                    //_cookieManager.SetCookie("ProjectID", "0");
+                    _cookieManager.SetCookie("ProjectID", "1008");
 
                     _cookieManager.SetCookie("ImageProfile", imageProfile);
                   
@@ -90,18 +104,22 @@ namespace Web.Controllers
                 //Session["Role_ID"] = getRolesId;
                 //Session["Employee"] = model.UserName;
 
-                _cookieManager.SetCookie("ProjectName","Select Project");
+                //_cookieManager.SetCookie("ProjectName","Select Project");
+
+                _cookieManager.SetCookie("ProjectName", "FAS");
 
                 _cookieManager.SetCookie("Role_ID", getRolesId.Value.ToString());
 
                 _cookieManager.SetCookie("Employee", model.Username);
-               
+                return Json(new { isValid = Message });
 
-                return RedirectToAction("Dashboard", "Home");
+                //  return RedirectToAction("Dashboard", "Home");
             }
             else
             {
-                return RedirectToAction("Login");
+                Message = "Not Valid";
+                return Json(new { isValid = Message });
+                //return RedirectToAction("Login");
             }
         }
 

@@ -1,0 +1,68 @@
+﻿@*@model IEnumerable<Core.Dto.InfoCode.InfoCodeData>
+*@
+@{
+    ViewBag.Title = "Info Code";
+    Layout = "~/Views/Shared/Template.cshtml";
+}
+
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="">Info Code</h5>
+        <a href="@Url.Action("Create","InfoCode")" class="btn btn-primary">Create</a>
+    </div>
+    <div class="table-responsive text-nowrap">
+        <table class="table"  id="rowList">
+            <thead>
+                <tr>
+                    <th>Code Type</th>
+                    <th>Code</th>
+                    <th>Code Description</th>
+                    <th>Code Value</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                @{
+                    
+                        <tr>
+
+                            <td>
+                                             </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td>
+
+                            </td>
+                        </tr>
+                    
+
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+            $('#rowList').DataTable();
+        });
+    </script>
+
+}
+
+
+
+
+
