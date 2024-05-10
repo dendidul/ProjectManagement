@@ -5,38 +5,17 @@
     Layout = "~/Views/Shared/Template.cshtml";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Sprint BackLog</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Settings 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                @*<p>Simple table with project listing with progress and editing options</p>*@
-                @*<a href="/TaskGroup/Create/" class="btn btn-primary">Input Task</a>*@
-                <br />
-                <!-- start project list -->
-                <table id="datatable" class="table table-striped projects">
+
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="">Sprint Backlog</h5>
+        
+    </div>
+    <div class="table-responsive text-nowrap">
+        <table id="datatable" class="table table-striped projects">
                     <thead>
                         <tr>
                             <th>Task Group Name</th>
@@ -57,8 +36,7 @@
 
                                     <td>
                                         <a href="/SprintBackLog/ConfigureTaskGroup/@i.Id" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Configure </a>
-                                        @*<a href="/TaskGroup/Details/@i.Id" class="btn btn-info btn-xs"><i class="fa fa-folder"></i>View Details </a>
-                                        <a href="/TaskGroup/Delete/@i.Id" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete </a>*@
+                                    
                                     </td>
                                 </tr>
                             }
@@ -66,168 +44,16 @@
 
                     </tbody>
                 </table>
-                <!-- end project list -->
-            </div>
-        </div>
     </div>
 </div>
 
+
+
+
 @section scripts {
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#datatable').dataTable();
         });
     </script>
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/Template.cshtml";
-}
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Sprint Backlog(Make sure you have chosen a Project)</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Settings 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-               
-                <div class="col-md-12">
-                    <div>
-                        <ul id="mainframe" class="list-unstyled">
-
-                            <li class="panel panel-success col-md-12" style="border:0px">
-
-                                <ul id="draggablePanelList" class="list-unstyled">
-
-                                    <li class="panel panel-info col-md-3" style="margin:10px">
-
-                                        <div class="panel-heading">Product Backlog</div>
-                                        <div class="panel-body">Content ...</div>
-
-                                        <ul id="draggablePanelList" class="list-unstyled">
-                                            <li class="panel panel-success">
-                                                <div class="panel-heading">lalalala</div>
-                                                <div class="panel-body">Content ...</div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="panel panel-info col-md-3" style="margin:10px">
-                                        <div class="panel-heading">Sprint 1</div>
-                                        <div class="panel-body">Content ...</div>
-
-                                        <ul id="draggablePanelList" class="list-unstyled">
-                                            <li class="panel panel-success">
-                                                <div class="panel-heading">yuyuyu</div>
-                                                <div class="panel-body">Content ...</div>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-               </div>
-               
-                   
-                </div>
-        </div>
-    </div>
-</div>
-
-@section scripts {
-    <script type="text/javascript">
-            $(document).ready(function () {
-                var panelList = $('#draggablePanelList');
-              
-                var panelList2 = $('#mainframe');
-               
-
-                panelList.sortable({
-                    // Only make the .panel-heading child elements support dragging.
-                    // Omit this to make then entire <li>...</li> draggable.
-                    handle: '.panel-heading',
-                    update: function () {
-                        $('.panel', panelList).each(function (index, elem) {
-                            var $listItem = $(elem),
-                                newIndex = $listItem.index();
-
-                            // Persist the new indices.
-                        });
-
-                      
-                     
-                    }
-                });
-
-              
-
-                panelList2.sortable({
-                    // Only make the .panel-heading child elements support dragging.
-                    // Omit this to make then entire <li>...</li> draggable.
-                    handle: '.panel-heading',
-                    update: function () {
-                        $('.panel', panelList).each(function (index, elem) {
-                            var $listItem = $(elem),
-                                newIndex = $listItem.index();
-
-                            // Persist the new indices.
-                        });
-                    }
-                });
-
-
-
-              
-
-             
-
-
-              
-
-
-
-            });
-    </script>
-}*@
-
-
