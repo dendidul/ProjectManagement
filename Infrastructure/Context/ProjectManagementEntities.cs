@@ -76,7 +76,7 @@ namespace Infrastructure.Context
 
         public virtual DbSet<TaskGroupModel> TaskGroupModels { get; set; } = null!;
 
-        
+
 
 
 
@@ -90,20 +90,20 @@ namespace Infrastructure.Context
             {
                 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
 
-                  optionsBuilder.UseNpgsql(
-                      //"UserID=oryhuliu;Password=dg3hjPij_qj9Jn5pQ2nPUVab5baJG0kH;Host=kiouni.db.elephantsql.com;Port=5432;Database=oryhuliu;"
+                optionsBuilder.UseNpgsql(
+                    "UserID=oryhuliu;Password=dg3hjPij_qj9Jn5pQ2nPUVab5baJG0kH;Host=kiouni.db.elephantsql.com;Port=5432;Database=oryhuliu;"
 
-                      "User ID=postgres;Password=osama123;Host=localhost;Port=5432;Database=ProjectManagement_dev;"
-                      );
+                    //"User ID=postgres;Password=osama123;Host=localhost;Port=5432;Database=ProjectManagement_dev;"
+                    );
 
-               // optionsBuilder.UseNpgsql(_configCreator.Get("ConnectionDB:ProjectManagement:Constring"));
+                // optionsBuilder.UseNpgsql(_configCreator.Get("ConnectionDB:ProjectManagement:Constring"));
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-                 modelBuilder.Entity<UserProjectModel>().HasNoKey();
+
+            modelBuilder.Entity<UserProjectModel>().HasNoKey();
             modelBuilder.Entity<EventViewModel>().HasNoKey();
             modelBuilder.Entity<CalendarViewModel>().HasNoKey();
             modelBuilder.Entity<NewsFeedModels>().HasNoKey();
@@ -122,7 +122,7 @@ namespace Infrastructure.Context
             modelBuilder.Entity<ViewDocumentByProject>().HasNoKey();
             modelBuilder.Entity<ViewRolesProjectEmployee>().HasNoKey();
             modelBuilder.Entity<TaskGroupModel>().HasNoKey();
-            
+
 
             modelBuilder.Entity<Attachmentfile>(entity =>
             {

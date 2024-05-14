@@ -58,6 +58,11 @@ namespace Web.Controllers
             return View(data);
         }
 
+        public ActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Create(Category model)
         {
