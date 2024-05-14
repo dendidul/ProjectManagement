@@ -9,62 +9,48 @@
 
 @using (Html.BeginForm("Create", "Roles", FormMethod.Post, new { Class = "", Id = "formAddRoles" }))
 {
-<div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Create Roles</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">@ViewBag.Title</h4>
 
+    <div class="row">
+        <div class="col-xxl">
+            <div class="card mb-4">
 
-                </ul>
+                <div class="card-body">
+                    <form>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name"> Roles Name</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model=>model.Rolesname,new {Class = "form-control",PlaceHolder = "" })
+                            </div>
 
-
-                <div class="clearfix"></div>
-            </div>
-            <div class="clearfix"></div>
-
-            <div class="form-horizontal form-label-left input_mask">
-
-                <div class="item form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                        Roles Name <span class="required">*</span>
-                    </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.Rolesname, new { Class = "form-control col-md-7 col-xs-12" })
-                        @*<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">*@
-                    </div>
-                </div>
-
-                
-
-                <div class="item form-group">
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                        Description
-                    </label>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextAreaFor(model => model.Description, new { Class = "form-control col-md-7 col-xs-12" })
-                    </div>
-                </div>
-                                
-
-                <div class="item form-group">
-                    <div class="control-label col-md-5 col-sm-3 col-xs-12">
-                        <input type="submit" class="btn btn-success" value="Submit" />
-                        @*<button type="button" class="btn btn-warning">Back To List</button>*@
-                        <a href="/Roles/Index/" class="btn btn-warning">Back To List</a>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
                         </div>
+                 
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-email"> Description</label>
+                            <div class="col-sm-10">
+
+                                <div class="col-sm-12">
+                                    @Html.TextAreaFor(model=>model.Description,new {Class = "form-control",PlaceHolder = "" })
+                                </div>
 
 
-                    </div>
 
+                            </div>
+                        </div>
+                    
+                         <div class="demo-inline-spacing">
+                            <button type="submit" class="btn btn-primary">
+                             Save
+                            </button>
+                          
+                            <button type="button" class="btn btn-warning" onclick="history.back()">
+                              Cancel
+                            </button>
+                          </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+
     </div>
 }
